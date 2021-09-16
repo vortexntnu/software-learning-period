@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<launch>
+    <env name="ROSCONSOLE_FORMAT" value="[${severity}] [${time}] [${node}]: ${message}" />
+
+    <!-- PARAMETERS -->
+
+    <!-- NODES -->
+    <node pkg="talker_cpp" type="talker_cpp_node" name="talker_cpp" output="screen" respawn="true"/>
+
+    <!-- INCLUDES -->
+    <include file="$(find listener)/launch/listener.launch" pass_all_args="true"/>
+</launch>
