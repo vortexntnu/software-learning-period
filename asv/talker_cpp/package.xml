@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>talker_cpp</name>
+  <name>asv_talker_cpp</name>
   <version>0.0.0</version>
   <description>The talker_cpp package</description>
 

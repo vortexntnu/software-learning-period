@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(listener)
+project(auto_listener)
 
 find_package(catkin REQUIRED
 )

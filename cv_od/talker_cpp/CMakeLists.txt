@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(talker_cpp)
+project(cv_talker_cpp)
 
 add_compile_options(-std=c++11)
 
