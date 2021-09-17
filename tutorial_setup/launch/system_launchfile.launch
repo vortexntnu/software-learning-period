@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<launch>
+    <env name="ROSCONSOLE_FORMAT" value="[${severity}] [${time}] [${node}]: ${message}" />
+
+    <!-- PARAMETERS -->
+
+    <!-- NODES -->
+    <node pkg="asv_talker_cpp" type="asv_talker_cpp_node" name="asv_talker_cpp" output="screen" respawn="true"/>
+
+    <!-- INCLUDES -->
+    <include file="$(find asv_listener)/launch/listener.launch" pass_all_args="true"/>
+</launch>
