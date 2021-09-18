@@ -11,7 +11,7 @@ Talker::Talker(ros::NodeHandle nh) {
 void Talker::spin() {
     ros::Rate loop_rate(frequency);
 
-    while(ros::ok) {
+    while(ros::ok()) {
 
         std_msgs::Int64 seq_msg;
         seq_msg.data = seq;
@@ -27,5 +27,5 @@ void Talker::spin() {
         loop_rate.sleep();
     }
 
-    ros::shutdown();
+    return;
 }
