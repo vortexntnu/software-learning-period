@@ -14,7 +14,7 @@ class Talker:
     def __init__(self, frequency=1):
         self.seq = 0
         self.rate = rospy.Rate(frequency)
-        self.h = 0.001*frequency
+        self.h = 0.01*frequency
 
         self.pos = [0, 0, 0]
         self.q = [0, 0, 0, 1]
@@ -24,10 +24,10 @@ class Talker:
 
     def random_walk(self):
         for i in range(len(self.pos)):
-            self.pos[i] += np.random.uniform(-5*self.h, 5*self.h)
+            self.pos[i] += np.random.uniform(-self.h, self.h)
 
         for i in range(len(self.q)):
-            self.q[i] += np.random.uniform(-self.h, self.h)
+            self.q[i] += np.random.uniform(-0.1*self.h, 0.3*self.h)
 
         self.q /= np.linalg.norm(self.q)
 
