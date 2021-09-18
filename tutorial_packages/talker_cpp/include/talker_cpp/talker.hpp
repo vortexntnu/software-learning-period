@@ -8,26 +8,37 @@
 
 #include <array>
 
+/**
+ * @brief This is a "talker" class, which is a term coined by
+ * the ROS tutorial for something that periodically publishes 
+ * messages without any other inputs.
+*/
 class Talker {
 public:
+    /**
+     * @brief The class constructor
+     * 
+     * @param nh A unique identifier for the node that this will run on
+    */
     Talker(ros::NodeHandle nh);
 
+    /**
+     * @brief Performs the node tasks, spins once, then sleeps
+     * for a set amount of time.
+     * 
+     * @note This is a blocking call on ros::ok()
+    */
     void spin();
 
 private:
-    int seq;
-    int frequency = 2;
+    int seq;            /** Incremented by one for every loop in spin() */
+    int frequency = 2;  /** The frequency of the loop in spin()*/
 
-    std::array<double, 3> pos = {5, 1, 0};
-    std::array<double, 4> q = {0, 0, 0, 1};
+    std::array<double, 3> pos = {5, 1, 0};  /** The position of the published pose */
+    std::array<double, 4> q = {0, 0, 0, 1}; /** The orientation of the published pose */
 
-    ros::Publisher seq_pub;
-    ros::Publisher random_pose_pub;
-
-    ros::Subscriber pose_reply_sub;
-
-
-    void odom_reply_cb(const geometry_msgs::Pose &odom_msg);
+    ros::Publisher seq_pub;  /** Publisher for seq */
+    ros::Publisher pose_pub; /** Publisher for pose */
 };
 
 #endif // TALKER_H
