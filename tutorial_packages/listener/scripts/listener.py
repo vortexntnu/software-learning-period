@@ -2,14 +2,14 @@
 
 import rospy
 
-from geometry_msgs.msg import Pose
+from geometry_msgs.msg import Pose, PoseStamped
 from std_msgs.msg import String
 
 class Listener:
     
     def __init__(self):
 
-        self.py_pose_listener = rospy.Subscriber("pose_py", Pose, self.py_pose_cb, queue_size=10)
+        self.py_pose_listener = rospy.Subscriber("pose_py", PoseStamped, self.py_pose_cb, queue_size=10)
         self.cpp_pose_listener = rospy.Subscriber("pose_cpp", Pose, self.cpp_pose_cb, queue_size=10)
 
     
