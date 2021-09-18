@@ -14,22 +14,21 @@ void Talker::spin() {
     while(ros::ok()) {
 
         geometry_msgs::Pose pose_msg;
-        pose_msg.position.x = 5;
-        pose_msg.position.y = 1;
-        pose_msg.position.z = 0;
+        pose_msg.position.x = pos[0];
+        pose_msg.position.y = pos[1];
+        pose_msg.position.z = pos[2];
 
-        pose_msg.quaternion.x = 0;
-        pose_msg.quaternion.y = 0;
-        pose_msg.quaternion.z = 0;
-        pose_msg.quaternion.w = 0;
+        pose_msg.orientation.x = q[0];
+        pose_msg.orientation.y = q[1];
+        pose_msg.orientation.z = q[2];
+        pose_msg.orientation.w = q[3];
         random_pose_pub.publish(pose_msg);
-
 
         std_msgs::Int64 seq_msg;
         seq_msg.data = seq;
         seq_pub.publish(seq_msg);
 
-        
+
         seq++;
 
         ros::spinOnce();

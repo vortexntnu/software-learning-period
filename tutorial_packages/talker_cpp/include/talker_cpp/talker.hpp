@@ -6,6 +6,8 @@
 #include <std_msgs/String.h>
 #include <geometry_msgs/Pose.h>
 
+#include <array>
+
 class Talker {
 public:
     Talker(ros::NodeHandle nh);
@@ -15,6 +17,9 @@ public:
 private:
     int seq;
     int frequency = 2;
+
+    std::array<double, 3> pos = {5, 1, 0};
+    std::array<double, 4> q = {0, 0, 0, 1};
 
     ros::Publisher seq_pub;
     ros::Publisher random_pose_pub;
