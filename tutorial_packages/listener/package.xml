@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>asv_listener</name>
+  <name>listener</name>
   <version>0.0.0</version>
   <description>The listener package</description>
 

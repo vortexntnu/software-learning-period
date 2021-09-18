@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(asv_listener)
+project(listener)
 
 find_package(catkin REQUIRED
 )

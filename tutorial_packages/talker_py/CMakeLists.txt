@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(asv_talker_py)
+project(talker_py)
 
 find_package(catkin REQUIRED COMPONENTS
     rospy

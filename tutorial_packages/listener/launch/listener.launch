@@ -1,4 +1,4 @@
 <?xml version="1.0"?>
 <launch>
-    <node pkg="asv_listener" type="listener.py" name="listener" output="screen" respawn="true"/>
+    <node pkg="listener" type="listener.py" name="listener" output="screen" respawn="true"/>
 </launch>
