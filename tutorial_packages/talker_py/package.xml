@@ -6,10 +6,21 @@
 
   <maintainer email="detoxte@gmail.com">strom</maintainer>
 
+  <!-- For our public project, we have stuck with an MIT license.
+  I added The Unlicense to this since it is only a tutorial :^) -->
   <license>The Unlicense</license>
+
+  <!-- Catkin will check for the packages you define below when building.
+  If you do not have one or more packages installed (or sourced!), the build
+  will fail. -->
 
   <buildtool_depend>catkin</buildtool_depend>
 
+  <!-- The packages below should reflect what you have added to find_package()
+  in the CMakeLists.txt of the package. Adding all packages from find_package()
+  to *both* build_depend and exec_depend is not technically needed, but it's
+  usually the easiest (and good practice!). Note that you shouldn't added packages
+  you end up not using here - see the above comment-->
   <build_depend>rospy</build_depend>
   <build_depend>std_msgs</build_depend>
   <build_depend>nav_msgs</build_depend>

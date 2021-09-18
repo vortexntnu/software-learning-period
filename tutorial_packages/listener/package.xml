@@ -10,4 +10,6 @@
 
   <buildtool_depend>catkin</buildtool_depend>
 
+  <!-- This is an example of how you *technically* dont need to add build
+  and exec depends here, but it's very bad practice not to!!!!!!!!!-->
 </package>
