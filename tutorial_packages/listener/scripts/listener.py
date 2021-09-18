@@ -14,10 +14,10 @@ class Listener:
 
     
     def py_pose_cb(self, pose_msg):
-        pass
+        rospy.loginfo("Python talker sent the message: {}".format(pose_msg))
 
     def cpp_pose_cb(self, pose_msg):
-        pass
+        rospy.loginfo("C++ talker sent the message: {}".format(pose_msg))
 
 if __name__ == '__main__':
 
