@@ -6,8 +6,8 @@ add_compile_options(-std=c++11)
 
 # Here we specify standard ROS components that we use. If you wish to
 # use #include <some_ROS_standard_component>, it needs to go here.
-# Note that we first need to "find" the packages with find_package,
-# then actually include them with catkin_package
+# By "finding" the packages we include them in this project, while
+# catkin_package declares things to be passed to dependent projects
 find_package(catkin REQUIRED COMPONENTS
     roscpp
     std_msgs
@@ -28,8 +28,8 @@ include_directories(
     ${catkin_INCLUDE_DIRS}
 )
 
-# This may come in handy if there are other external dependencies that can't be
-# listed in the above fashion.
+# This may come in handy if there are other external dependencies that need to be installed
+# before anything else, i.e. custom messages or reconfigure servers.
 # add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 # The first argument here is the name of the executable that your C++ files will compile down to.
