@@ -3,10 +3,14 @@
     <env name="ROSCONSOLE_FORMAT" value="[${severity}] [${time}] [${node}]: ${message}" />
 
     <!-- PARAMETERS -->
+    <arg name="ns_asv" default="asv"/>
 
     <!-- NODES -->
-    <node pkg="asv_talker_cpp" type="asv_talker_cpp_node" name="asv_talker_cpp" output="screen" respawn="true"/>
+    <group ns="$(arg ns_asv)">
+        <include file="$(find asv_listener)/launch/listener.launch" pass_all_args="true"/> <!-- Example of how to include other launchfile-->
 
-    <!-- INCLUDES -->
-    <include file="$(find asv_listener)/launch/listener.launch" pass_all_args="true"/>
+        <node pkg="asv_talker_cpp" type="asv_talker_cpp_node" name="talker_cpp" output="screen" respawn="true"/>
+        <node pkg="asv_talker_py"  type="talker.py"           name="talker_py"  output="screen" respawn="true"/>
+    </group>
+
 </launch>
