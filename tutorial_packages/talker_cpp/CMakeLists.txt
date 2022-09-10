@@ -35,7 +35,7 @@ include_directories(
 # The first argument here is the name of the executable that your C++ files will compile down to.
 # The .cpp files added to this call are the files you've written and wish to compile.
 add_executable(${PROJECT_NAME}_node
-    src/talker.cpp
+    #src/talker.cpp
     src/talker_node.cpp
 )
 

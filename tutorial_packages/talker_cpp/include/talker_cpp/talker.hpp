@@ -39,6 +39,7 @@ private:
 
     ros::Publisher seq_pub;  /** Publisher for seq */
     ros::Publisher pose_pub; /** Publisher for pose */
+    ros::Publisher random_pose_pub;
 };
 
 #endif // TALKER_H
