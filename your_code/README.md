@@ -1,4 +1,4 @@
-# This is a tutorial to how some fundamental concepts of ROS works. More spesifically, you will learn how to:
+## This is a tutorial to how some fundamental concepts of ROS works. More spesifically, you will learn how to:
 * set up a workspace 
 * create a node for publishing to a topic
 * create a node for subscribing to the same topic
@@ -31,8 +31,20 @@ git clone https://github.com/vortexntnu/software-learning-period.git
 
 ```
 
-To be able to run the code, it must be built:
+To be able to run the code, move to the workspace folder and build:
+```
+cd ../..
+catkin build
+```
+One dot means "this folder" and two dots means "previous folder". The command in the first line therefore means that you are moving 2 layers of folders back according to the path to the folder you currently are in.
 
+## Task 1: Create a package containing a publisher (C++ or Python)
+
+## Task 2: Create a package containing a subscriber (C++ or Python)
+
+## Running a node
+
+## Creating a launch file
 
 
 ## To run the nodes, a roscore must run: type roscore in the terminal
