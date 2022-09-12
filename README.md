@@ -65,7 +65,7 @@ git clone https://github.com/vortexntnu/software-learning-period.git
 
 ```
 
-In order to compile and link the catkin packages inside the repo we need to use the command "catkin build". 
+In order to compile and link the catkin packages inside the repo we need to use the command "catkin build" while located at the workspace folder you created. 
 ```
 cd ../..
 catkin build
@@ -179,21 +179,20 @@ orientation:
 
 ### Intermission and neat commands
 
-You can use the "cat" command in order to print a files content to terminal.  
+You can use the "cat" command in order to print a files content to terminal. The command below will print the contents of examplefile.py to the terminal.
 
 ```
 cat examplefile.py
 ```
-This will print the contents of examplefile.py to the terminal.
 
 
 
-You can create a new file by using the touch command. 
+
+You can create a new file by using the "touch" command. The command below will create a new python file in your current directory called examplefile.py.
 
 ```
 touch examplefile.py
 ```
-This will create a new python file in your current directory called examplefile.py.
 
 
 You can use the "nano" command to do text editiong from terminal. If nano is not installed type:  
@@ -207,6 +206,9 @@ In order to do text editiing in a pythonfile:
 ```
 nano examplefile.py
 ```
+
+If you want to exit nano then you can use (ctrl + x) 
+You will the be prompted if you wold like to save your changes. You can decide weather to save or dicard by typing (N) or (Y).
 
 
 ## Task 2: Create a package containing a subscriber (C++ or Python)
