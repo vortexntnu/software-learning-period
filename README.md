@@ -177,7 +177,36 @@ orientation:
 ---
 ```
 
-### Intermission and neat commands
+
+### Neat commands
+
+You can change directories by using the "cd" command.
+
+```
+cd [example_folder]
+```
+
+Example:
+
+```
+cd Downloads
+```
+
+You can also use cd to go out of a directory.
+
+Example:
+
+```
+cd ..
+```
+
+
+You can print what subdirectories is inside your current directory by using the "ls" command.
+
+```
+ls
+```
+
 
 You can use the "cat" command in order to print a files content to terminal. The command below will print the contents of examplefile.py to the terminal.
 
