@@ -241,7 +241,25 @@ If you want to exit nano then you can use (ctrl + x)
 You will the be prompted if you wold like to save your changes. You can decide weather to save or dicard by typing (N) or (Y).
 
 
-## Task 2: Create a package containing a subscriber (C++ or Python)
+### Task 2: Create a package containing a publisher (C++ or Python)
+By the end of task 2 you will be able to make catkin packages, be familiar with what a branch is and the commands: git add, git commit and git push.
+
+For this task you will need visual studio code on you linux computer. Download link can be found here: https://code.visualstudio.com/download
+
+### Task 2 prelimenaries
+
+At Vortex NTNU we organize our code in repositories, and use a tool called git for version control. Each repository contains the codebase for a specific system. These repositories are stored at Github, and each of these repositories has different versions.
+
+These versions are what we call branches, so a branch is in fact just a version of the codebase. Each repository has a version where the code runs smoothly and is able to build. This is called the master branch. 
+
+When we want to add a different feature to our codebase, we clone the remote codebase to our computer. Once the codebase is stored locally on our computer we want to let git know that we are working on a new version of the codebase (new branch). When you make a new branch you always branch out from either the master branch (the working version of the codebase), or an experimental version of the codebase (other branch). 
+
+Once we have implemented our new feature in our new branch we want to merge our branch with the master branch. To do this you have to make a pull request. This is when the changes added by your branch will be read through by one or more software leads, and either approved or declined for mergening with the master branch.
+
+The benefit of using git is that it is possible to revert any changes made to the codebase, and it allows for easier cooperation when working on the same codebase. 
+
+A nice git tutorial can be found at: https://www.youtube.com/playlist?list=PL4cUxeGkcC9goXbgTDQ0n_4TBzOO0ocPR
+
 
 ## Running a node
 
