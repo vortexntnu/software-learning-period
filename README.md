@@ -195,7 +195,7 @@ Once we have implemented our new feature in our new branch we want to merge our 
 
 The benefit of using git is that it is possible to revert any changes made to the codebase, and it allows for easier cooperation when working on the same codebase. 
 
-A nice git tutorial can be found at: https://www.youtube.com/playlist?list=PL4cUxeGkcC9goXbgTDQ0n_4TBzOO0ocPR
+A nice git tutorial can be found at: https://www.youtube.com/playlist?list=PL4cUxeGkcC9goXbgTDQ0n_4TBzOO0ocPR.
 
 ### Task 2.1 Making a branch and a catkin package
 
@@ -218,13 +218,14 @@ catkin_create_pkg myPackage std_msgs rospy roscpp
 ```
 The command above will make a package called myPackage which is dependent on std_msgs rospy and roscpp. "std_msgs" is a package containing all the standard messages for ros. You need the rospy package if you want to write a node in Python, and roscpp if you want to make a node in c++.  It will also generate a new folder called myPackage. This folder will contain an empty src folder, a CMakeLists.txt and a package.xml file. 
 
-Info on the contents of the package.xml file can be found here: http://wiki.ros.org/catkin/package.xml
-Info on the content of a CMakeLists.txt can be found here: http://wiki.ros.org/catkin/CMakeLists.txt
+Info on the contents of the package.xml file can be found here: http://wiki.ros.org/catkin/package.xml.
+
+Info on the content of a CMakeLists.txt can be found here: http://wiki.ros.org/catkin/CMakeLists.txt.
 
 
 ### Task 2.2 Writing a publisher and using git
 
-You can either look around in the training repo or head over to ROS-tutorials: http://wiki.ros.org/ROS/Tutorials if you need inspiration on how to write a publisher in either C++ or Python.
+You can either look around in the training repo or head over to ROS-tutorials: http://wiki.ros.org/ROS/Tutorials if you need inspiration on how to write a publisher in either C++ or Python. In order to validate that your package works you can try to listen to the node you made.
 
 When you have created your files you can first "stage" them by using the command "git add", this makes it possible to commit the chenges later.
 
@@ -232,7 +233,7 @@ When you have created your files you can first "stage" them by using the command
 git add /filename
 ```
 
-Once all your files have been stanged you can commit them vy using the command "git commit"
+Once all your files have been staged you can commit them vy using the command "git commit"
 
 ```
 git commit -m"A commit message."
