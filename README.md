@@ -252,13 +252,37 @@ At Vortex NTNU we organize our code in repositories, and use a tool called git f
 
 These versions are what we call branches, so a branch is in fact just a version of the codebase. Each repository has a version where the code runs smoothly and is able to build. This is called the master branch. 
 
-When we want to add a different feature to our codebase, we clone the remote codebase to our computer. Once the codebase is stored locally on our computer we want to let git know that we are working on a new version of the codebase (new branch). When you make a new branch you always branch out from either the master branch (the working version of the codebase), or an experimental version of the codebase (other branch). 
+When we want to add a different feature to our codebase, we clone the remote codebase to our computer. Once the codebase is stored locally on our computer we want to let git know that we are working on a new version of the codebase (new branch). When you make a new branch you always branch out from either the working version of the codebase (master branch), or an experimental version of the codebase (other branch). 
 
-Once we have implemented our new feature in our new branch we want to merge our branch with the master branch. To do this you have to make a pull request. This is when the changes added by your branch will be read through by one or more software leads, and either approved or declined for mergening with the master branch.
+Once we have implemented our new feature in our new branch we want to merge our branch with the master branch. To do this you have to make a pull request. This is when the changes added by your branch will be read through by one or more software leads, and either approved or declined for mergening with the master branch. In this tutorial we want you to push your branch to the repository, but we don't want you to open a pull request.
 
 The benefit of using git is that it is possible to revert any changes made to the codebase, and it allows for easier cooperation when working on the same codebase. 
 
 A nice git tutorial can be found at: https://www.youtube.com/playlist?list=PL4cUxeGkcC9goXbgTDQ0n_4TBzOO0ocPR
+
+### Task 2.1 Making a branch and a catkin package
+
+Branch out of the master branch by using the command:
+
+```
+git checkout -b "yourName/Task_2"
+```
+
+Once you are on your branch you can navigate to the your_code directory. Then use the "catkin_create_pkg" command:
+
+```
+catkin_create_pkg [package name] [dependency 1] [dependency 2]
+```
+
+Example:
+
+```
+catkin_create_pkg myPackage std_msgs rospy roscpp
+```
+The command above will make a package called myPackage which is dependent on std_msgs rospy and roscpp. "std_msgs" is a package containing all the standard messages for ros. You need the rospy package if you want to write a node in Python, and roscpp if you want to make a node in c++.
+
+### Task 2.2 Writing a publisher
+
 
 
 ## Running a node
