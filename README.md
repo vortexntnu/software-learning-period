@@ -178,7 +178,75 @@ orientation:
 ```
 
 
+### Task 2: Create a package containing a publisher (C++ or Python)
+By the end of task 2 you will be able to make catkin packages, be familiar with what a branch is and the commands: git add, git commit and git push.
+
+For this task you will need visual studio code on you linux computer. Download link can be found here: https://code.visualstudio.com/download
+
+### Task 2 prelimenaries
+
+At Vortex NTNU we organize our code in repositories, and use a tool called git for version control. Each repository contains the codebase for a specific system. These repositories are stored at Github, and each of these repositories has different versions.
+
+These versions are what we call branches, so a branch is in fact just a version of the codebase. Each repository has a version where the code runs smoothly and is able to build. This is called the master branch. 
+
+When we want to add a different feature to our codebase, we clone the remote codebase to our computer. Once the codebase is stored locally on our computer we want to let git know that we are working on a new version of the codebase (new branch). When you make a new branch you always branch out from either the working version of the codebase (master branch), or an experimental version of the codebase (other branch). 
+
+Once we have implemented our new feature in our new branch we want to merge our branch with the master branch. To do this you have to make a pull request. This is when the changes added by your branch will be read through by one or more software leads, and either approved or declined for mergening with the master branch. In this tutorial we want you to push your branch to the repository, but we don't want you to open a pull request.
+
+The benefit of using git is that it is possible to revert any changes made to the codebase, and it allows for easier cooperation when working on the same codebase. 
+
+A nice git tutorial can be found at: https://www.youtube.com/playlist?list=PL4cUxeGkcC9goXbgTDQ0n_4TBzOO0ocPR
+
+### Task 2.1 Making a branch and a catkin package
+
+Branch out of the master branch by using the command:
+
+```
+git checkout -b "yourName/Task_2"
+```
+
+Once you are on your branch you can navigate to the your_code directory. Then use the "catkin_create_pkg" command:
+
+```
+catkin_create_pkg [package name] [dependency 1] [dependency 2]
+```
+
+Example:
+
+```
+catkin_create_pkg myPackage std_msgs rospy roscpp
+```
+The command above will make a package called myPackage which is dependent on std_msgs rospy and roscpp. "std_msgs" is a package containing all the standard messages for ros. You need the rospy package if you want to write a node in Python, and roscpp if you want to make a node in c++.  It will also generate a new folder called myPackage. This folder will contain an empty src folder, a CMakeLists.txt and a package.xml file. 
+
+Info on the contents of the package.xml file can be found here: http://wiki.ros.org/catkin/package.xml
+Info on the content of a CMakeLists.txt can be found here: http://wiki.ros.org/catkin/CMakeLists.txt
+
+
+### Task 2.2 Writing a publisher and using git
+
+You can either look around in the training repo or head over to ROS-tutorials: http://wiki.ros.org/ROS/Tutorials if you need inspiration on how to write a publisher in either C++ or Python.
+
+When you have created your files you can first "stage" them by using the command "git add", this makes it possible to commit the chenges later.
+
+```
+git add /filename
+```
+
+Once all your files have been stanged you can commit them vy using the command "git commit"
+
+```
+git commit -m"A commit message."
+```
+
+Making a commit is similar to making a savepoint, as you can revert commits. A commit always comes aling with a commit message. This message should be as precise as possible in regards to exactly what changes you have done.
+
+Every time changes are made to a file it needs to be staged again in order for it to be included in a commit. You can stage and commit as many times as you like. You will only publish your local branch to the remote repository once you use the "git push" command.
+
+```
+git push
+```
 ### Neat commands
+
 You are often able to autocomplete commands by using tab while writing them. If the command does not autocomplete it usally means that something is not sourced properly, or that you have a typo in your command.
 
 You can change directories by using the "cd" command.
@@ -241,54 +309,4 @@ If you want to exit nano then you can use (ctrl + x)
 You will the be prompted if you wold like to save your changes. You can decide weather to save or dicard by typing (N) or (Y).
 
 
-### Task 2: Create a package containing a publisher (C++ or Python)
-By the end of task 2 you will be able to make catkin packages, be familiar with what a branch is and the commands: git add, git commit and git push.
-
-For this task you will need visual studio code on you linux computer. Download link can be found here: https://code.visualstudio.com/download
-
-### Task 2 prelimenaries
-
-At Vortex NTNU we organize our code in repositories, and use a tool called git for version control. Each repository contains the codebase for a specific system. These repositories are stored at Github, and each of these repositories has different versions.
-
-These versions are what we call branches, so a branch is in fact just a version of the codebase. Each repository has a version where the code runs smoothly and is able to build. This is called the master branch. 
-
-When we want to add a different feature to our codebase, we clone the remote codebase to our computer. Once the codebase is stored locally on our computer we want to let git know that we are working on a new version of the codebase (new branch). When you make a new branch you always branch out from either the working version of the codebase (master branch), or an experimental version of the codebase (other branch). 
-
-Once we have implemented our new feature in our new branch we want to merge our branch with the master branch. To do this you have to make a pull request. This is when the changes added by your branch will be read through by one or more software leads, and either approved or declined for mergening with the master branch. In this tutorial we want you to push your branch to the repository, but we don't want you to open a pull request.
-
-The benefit of using git is that it is possible to revert any changes made to the codebase, and it allows for easier cooperation when working on the same codebase. 
-
-A nice git tutorial can be found at: https://www.youtube.com/playlist?list=PL4cUxeGkcC9goXbgTDQ0n_4TBzOO0ocPR
-
-### Task 2.1 Making a branch and a catkin package
-
-Branch out of the master branch by using the command:
-
-```
-git checkout -b "yourName/Task_2"
-```
-
-Once you are on your branch you can navigate to the your_code directory. Then use the "catkin_create_pkg" command:
-
-```
-catkin_create_pkg [package name] [dependency 1] [dependency 2]
-```
-
-Example:
-
-```
-catkin_create_pkg myPackage std_msgs rospy roscpp
-```
-The command above will make a package called myPackage which is dependent on std_msgs rospy and roscpp. "std_msgs" is a package containing all the standard messages for ros. You need the rospy package if you want to write a node in Python, and roscpp if you want to make a node in c++.
-
-### Task 2.2 Writing a publisher
-
-
-
-## Running a node
-
-## Creating a launch file
-
-
-## To run the nodes, a roscore must run: type roscore in the terminal
 
