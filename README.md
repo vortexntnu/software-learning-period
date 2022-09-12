@@ -10,7 +10,7 @@
 * publish to the topic from the terminal
 * create a launch file for automatically launching the nodes
 
-
+Commands needed for the tutorial can be found at the bottom of the document. 
 ### Installing ROS and catkin
 Follow the steps in the ROS-wiki, and install the "Desktop version".
 
@@ -179,6 +179,7 @@ orientation:
 
 
 ### Neat commands
+You are often able to autocomplete commands by using tab while writing them. If the command does not autocomplete it usally means that something is not sourced properly, or that you have a typo in your command.
 
 You can change directories by using the "cd" command.
 
