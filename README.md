@@ -21,6 +21,8 @@ http://wiki.ros.org/noetic/Installation/Ubuntu
 
 ROS is short for Robot operating system. This is the middelware we use on our AUV to communicate between all our systems. ROS allows for programs to communicate over a defined API with ROS messages and services. It enables programs to run on multiple computers and communicates over the network. ROS modules can also run on different laguages such as C++ and Python.
 
+Catkin is the build system for ROS. The tutorial will not go in depth on exactly how catkin works, but for those interested you can read up on catkin here: https://nu-msr.github.io/me495_site/lecture02_catkin.html
+
 This tutorial will mainly focus on nodes. A node is a single purpose executable program organized in packages. Nodes communicate over topics, which again is a name for a stream of messages. 
 
 ROS has its own standard messsages and services but it is also possible to create your own custom messages and custom services.
@@ -63,7 +65,7 @@ git clone https://github.com/vortexntnu/software-learning-period.git
 
 ```
 
-To be able to run the code, move to the workspace folder and build:
+In order to compile and link the catkin packages inside the repo we need to use the command "catkin build". 
 ```
 cd ../..
 catkin build
@@ -175,8 +177,36 @@ orientation:
 ---
 ```
 
+### Intermission and neat commands
+
+You can use the "cat" command in order to print a files content to terminal.  
+
+```
+cat examplefile.py
+```
+This will print the contents of examplefile.py to the terminal.
 
 
+
+You can create a new file by using the touch command. 
+
+```
+touch examplefile.py
+```
+This will create a new python file in your current directory called examplefile.py.
+
+
+You can use the "nano" command to do text editiong from terminal. If nano is not installed type:  
+
+```
+sudo apt-get install nano
+```
+
+In order to do text editiing in a pythonfile:
+
+```
+nano examplefile.py
+```
 
 
 ## Task 2: Create a package containing a subscriber (C++ or Python)
