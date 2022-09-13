@@ -183,9 +183,10 @@ By the end of task 2 you will be able to make catkin packages, be familiar with 
 
 For this task you will need visual studio code on you linux computer. Download link can be found here: https://code.visualstudio.com/download
 
-You can either look around in the training repo or head over to ROS-tutorials: http://wiki.ros.org/ROS/Tutorials if you need inspiration on how to write a publisher in either C++ or Python. In order to validate that your package works you can try to listen to the node you made.
+You can either look around in the training repo or head over to ROS-tutorials: http://wiki.ros.org/ROS/Tutorials if you need inspiration on how to write a publisher in either C++ or Python. In order to validate that your package works you can try to listen to the node you made. A nice tip is to use the code for a publisher in the ros wiki, and use that to see if you can get the node to run. Task 2 will mainly walk you through the "janitor work" that needs to be done in order for your node to be able to  run in your newly made catkin package.
 
-### Task 2 prelimenaries
+
+### Task 2 prelimenaries for git
 
 At Vortex NTNU we organize our code in repositories, and use a tool called git for version control. Each repository contains the codebase for a specific system. These repositories are stored at Github, and each of these repositories has different versions.
 
@@ -245,7 +246,7 @@ chmod -x myPythonNode.py
 
 
 
-If you created your package and listed roscpp as a dependency, then an include folder was also created. Inside this folder there is another folder with the same name as your package. Here you can create you header file. In order to link your header file to your .cpp file (which should be located in the src folder), you need to make some changes to CMakeLists.txt.
+If you created your package and listed roscpp as a dependency, then an include folder was also created. Inside this folder there is another folder with the same name as your package. Here you can create you header file. In order to link your header file to your .cpp file (which should be located in the src folder) and make your .cpp file an executable you need to make some changes to CMakeLists.txt.
 
 There are several lines you need to uncomment in CMakeLists.txt:
 
@@ -287,6 +288,29 @@ Every time changes are made to a file it needs to be staged again in order for i
 ```
 git push
 ```
+
+### Task 3: Create a package containing a subscriber (C++ or Python)
+
+Make a package containing a subscriber that will subscribe to the topic that is being published from your earlier package. If you already wrote your publisher in Python you could write your subscriber in C++.
+
+### Task 3.1
+
+Make a launch file to launch both your nodes at once. 
+
+If you need inspiration for how to make a launch file, it is reccomended that you inspect the launch files in the repo.
+
+Once you have made your launchfile (which is typically located in a package) you can launch is by using the "roslaunch command".
+
+```
+roslaunch [package_name] [launchfile_name]
+```
+
+Example:
+
+```
+roslaunch tutorial_setup system_launchfile.launch
+```
+This command will launch the premande nodes in the training repo.
 ### Neat commands
 
 You are often able to autocomplete commands by using tab while writing them. If the command does not autocomplete it usally means that something is not sourced properly, or that you have a typo in your command.
