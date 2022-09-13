@@ -183,6 +183,8 @@ By the end of task 2 you will be able to make catkin packages, be familiar with 
 
 For this task you will need visual studio code on you linux computer. Download link can be found here: https://code.visualstudio.com/download
 
+You can either look around in the training repo or head over to ROS-tutorials: http://wiki.ros.org/ROS/Tutorials if you need inspiration on how to write a publisher in either C++ or Python. In order to validate that your package works you can try to listen to the node you made.
+
 ### Task 2 prelimenaries
 
 At Vortex NTNU we organize our code in repositories, and use a tool called git for version control. Each repository contains the codebase for a specific system. These repositories are stored at Github, and each of these repositories has different versions.
@@ -196,6 +198,7 @@ Once we have implemented our new feature in our new branch we want to merge our 
 The benefit of using git is that it is possible to revert any changes made to the codebase, and it allows for easier cooperation when working on the same codebase. 
 
 A nice git tutorial can be found at: https://www.youtube.com/playlist?list=PL4cUxeGkcC9goXbgTDQ0n_4TBzOO0ocPR.
+
 
 ### Task 2.1 Making a branch and a catkin package
 
@@ -223,10 +226,48 @@ Info on the contents of the package.xml file can be found here: http://wiki.ros.
 Info on the content of a CMakeLists.txt can be found here: http://wiki.ros.org/catkin/CMakeLists.txt.
 
 
-### Task 2.2 Writing a publisher and using git
+### Task 2.2 Writing a publisher (Python)
 
-You can either look around in the training repo or head over to ROS-tutorials: http://wiki.ros.org/ROS/Tutorials if you need inspiration on how to write a publisher in either C++ or Python. In order to validate that your package works you can try to listen to the node you made.
+Once your package has been created you should rename your src folder to scripts and create a new python file inside your new scrpits folder. It is important to add the shebang "#!/usr/bin/env python" at the top of you python file. This is used to tell the kernel which interpreter should be used to run the commands present in the file. Once the shebang is added you can write your script, but you will need to make it an executable before being able to use either python3 or rosrun to execute your python file. This can be done by using the "chmod -x" command.
 
+```
+chmod -x [filname]
+```
+
+Example:
+
+```
+chmod -x myPythonNode.py
+```
+
+
+### Task 2.2 Writing a publisher (C++)
+
+
+
+If you created your package and listed roscpp as a dependency, then an include folder was also created. Inside this folder there is another folder with the same name as your package. Here you can create you header file. In order to link your header file to your .cpp file (which should be located in the src folder), you need to make some changes to CMakeLists.txt.
+
+There are several lines you need to uncomment in CMakeLists.txt:
+
+1. You want to head over to approximatly line 105 and uncomment "INCLUDE_DIRS include"
+
+2. In include_directories you want to uncomment "include".
+
+3. You wnat to decleare your .cpp file as an executable, so head to  approximatly line 135 and uncomment "add_executable(${PROJECT_NAME}_node src/publisher_cpp.cpp". After "src/" it is important that you write the filename of the .cpp file you want to make an executable.
+
+4. You want to uncomment "add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})"
+
+5. Lastly you have to head to approximatly line 148 and uncomment " target_link_libraries(${PROJECT_NAME}_node
+   ${catkin_LIBRARIES}
+ )".
+
+Now you need to head over to your workspace folder and use catkin build, and source your workspace.
+
+Now you can try to run the node with rosrun!
+
+ If you would like more explanations as for how CMakeLists.txt works, you can snoop aorund in the CMakeLists.txt in the talker_cpp oackage located in tutorial packages.
+
+###  Task 2.2 Using git
 When you have created your files you can first "stage" them by using the command "git add", this makes it possible to commit the chenges later.
 
 ```
