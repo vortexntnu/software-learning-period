@@ -7,7 +7,6 @@
 * listen to a topic
 * create a node for publishing to a topic
 * create a node for subscribing to the same topic
-* publish to the topic from the terminal
 * create a launch file for automatically launching the nodes
 
 Commands needed for the tutorial can be found at the bottom of the document. 
@@ -25,7 +24,7 @@ Catkin is the build system for ROS. The tutorial will not go in depth on exactly
 
 This tutorial will mainly focus on nodes. A node is a single purpose executable program organized in packages. Nodes communicate over topics, which again is a name for a stream of messages. 
 
-ROS has its own standard messsages and services but it is also possible to create your own custom messages and custom services.
+ROS has its own standard messsages and services (you will learn about services later) but it is also possible to create your own custom messages and custom services.
 
 It is recommendedd to have a look at the ROS lecture slides at found at the university of zurich if you want a good primer to what ROS is and how it works.
 https://rsl.ethz.ch/education-students/lectures/ros.html
@@ -65,14 +64,14 @@ git clone https://github.com/vortexntnu/software-learning-period.git
 
 ```
 
-In order to compile and link the catkin packages inside the repo we need to use the command "catkin build" while located at the workspace folder you created. 
+In order to compile and link the catkin packages inside the repository we need to use the command "catkin build" while located at the workspace folder you created. 
 ```
 cd ../..
 catkin build
 ```
 One dot means "this folder" and two dots means "previous folder". The command in the first line therefore means that you are moving 2 layers of folders back according to the path to the folder you currently are in.
 
-To read more on catkin workspaces http://wiki.ros.org/catkin/workspaces
+To read more on catkin workspaces http://wiki.ros.org/catkin/workspaces.
 
 ### Task 1.2 Sourcing ros and running roscore
 
@@ -183,7 +182,9 @@ By the end of task 2 you will be able to make catkin packages, be familiar with 
 
 For this task you will need visual studio code on you linux computer. Download link can be found here: https://code.visualstudio.com/download
 
-You can either look around in the training repo or head over to ROS-tutorials: http://wiki.ros.org/ROS/Tutorials if you need inspiration on how to write a publisher in either C++ or Python. In order to validate that your package works you can try to listen to the node you made. A nice tip is to use the code for a publisher in the ros wiki, and use that to see if you can get the node to run. Task 2 will mainly walk you through the "janitor work" that needs to be done in order for your node to be able to  run in your newly made catkin package.
+You can either look around in the training repo or head over to ROS-tutorials http://wiki.ros.org/ROS/Tutorials if you need inspiration on how to write a publisher in either C++ or Python. In order to validate that your package works you can try to listen to the node you made. A nice tip is to use the code for a publisher in the ros wiki, and use that to see if you can get the node to run. 
+
+Task 2 will mainly walk you through the version control tool git and the "janitor work" that needs to be done in order for your node to be able to run in your newly made catkin package.
 
 
 ### Task 2 prelimenaries for git
@@ -229,7 +230,7 @@ Info on the content of a CMakeLists.txt can be found here: http://wiki.ros.org/c
 
 ### Task 2.2 Writing a publisher (Python)
 
-Once your package has been created you should rename your src folder to scripts and create a new python file inside your new scrpits folder. It is important to add the shebang "#!/usr/bin/env python" at the top of you python file. This is used to tell the kernel which interpreter should be used to run the commands present in the file. Once the shebang is added you can write your script, but you will need to make it an executable before being able to use either python3 or rosrun to execute your python file. This can be done by using the "chmod -x" command.
+Once your package has been created you should rename your src folder to scripts and create a new python file inside your new scripts folder. It is important to add the shebang "#!/usr/bin/env python" at the top of you python file. This is used to tell the kernel which interpreter should be used to run the commands present in the file. Once the shebang is added you can write your script, but you will need to make it an executable before being able to use either python3 or rosrun to execute your python file. This can be done by using the "chmod -x" command.
 
 ```
 chmod -x [filname]
@@ -269,7 +270,7 @@ Now you can try to run the node with rosrun!
  If you would like more explanations as for how CMakeLists.txt works, you can snoop around in the CMakeLists.txt in the talker_cpp package located in tutorial packages.
 
 ###  Task 2.2 Using git
-When you have created your files you can first "stage" them by using the command "git add", this makes it possible to commit the chenges later.
+When you have created your files you can first "stage" them by using the command "git add", this makes it possible to commit the changes later.
 
 ```
 git add /filename
@@ -281,7 +282,7 @@ Once all your files have been staged you can commit them by using the command "g
 git commit -m"A commit message."
 ```
 
-Making a commit is similar to making a savepoint, as you can revert commits. A commit always comes aling with a commit message. This message should be as precise as possible in regards to exactly what changes you have done.
+Making a commit is similar to making a savepoint, as you can revert commits. A commit always comes along with a commit message. This message should be as precise as possible in regards to exactly what changes you have done.
 
 Every time changes are made to a file it needs to be staged again in order for it to be included in a commit. You can stage and commit as many times as you like. You will only publish your local branch to the remote repository once you use the "git push" command.
 
@@ -299,7 +300,7 @@ Make a launch file to launch both your nodes at once.
 
 If you need inspiration for how to make a launch file, it is reccomended that you inspect the launch files in the repo.
 
-Once you have made your launchfile (which is typically located in a package) you can launch is by using the "roslaunch command".
+Once you have made your launchfile (which is typically located in a package) you can launch it by using the "roslaunch command".
 
 ```
 roslaunch [package_name] [launchfile_name]
