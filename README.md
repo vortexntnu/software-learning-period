@@ -253,7 +253,7 @@ There are several lines you need to uncomment in CMakeLists.txt:
 
 2. In include_directories you want to uncomment "include".
 
-3. You wnat to decleare your .cpp file as an executable, so head to  approximatly line 135 and uncomment "add_executable(${PROJECT_NAME}_node src/publisher_cpp.cpp". After "src/" it is important that you write the filename of the .cpp file you want to make an executable.
+3. You wnat to declare your .cpp file as an executable, so head to  approximatly line 135 and uncomment "add_executable(${PROJECT_NAME}_node src/publisher_cpp.cpp". After "src/" it is important that you write the filename of the .cpp file you want to make an executable.
 
 4. You want to uncomment "add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})"
 
@@ -265,7 +265,7 @@ Now you need to head over to your workspace folder and use catkin build, and sou
 
 Now you can try to run the node with rosrun!
 
- If you would like more explanations as for how CMakeLists.txt works, you can snoop aorund in the CMakeLists.txt in the talker_cpp oackage located in tutorial packages.
+ If you would like more explanations as for how CMakeLists.txt works, you can snoop around in the CMakeLists.txt in the talker_cpp package located in tutorial packages.
 
 ###  Task 2.2 Using git
 When you have created your files you can first "stage" them by using the command "git add", this makes it possible to commit the chenges later.
@@ -274,7 +274,7 @@ When you have created your files you can first "stage" them by using the command
 git add /filename
 ```
 
-Once all your files have been staged you can commit them vy using the command "git commit"
+Once all your files have been staged you can commit them by using the command "git commit"
 
 ```
 git commit -m"A commit message."
@@ -351,4 +351,27 @@ If you want to exit nano then you can use (ctrl + x)
 You will the be prompted if you wold like to save your changes. You can decide weather to save or dicard by typing (N) or (Y).
 
 
+If you want to make something executable you can use the "chmod -x" command.
 
+```
+chmod -x myfile.py
+```
+
+If you want to listen to a topic in terminal you can use the "rostopic echo" command.
+
+```
+rostopic echo /topic
+```
+
+If you want to publish to a topic in terminal you can use the "rostopic pub" command.
+
+Example: 
+```
+ rostopic pub /topic_name std_msgs/String hello
+```
+
+If you wnat to change directory to a package you can use roscd.
+
+```
+roscd [package name]
+```
