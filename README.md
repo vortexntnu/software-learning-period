@@ -255,7 +255,7 @@ There are several lines you need to uncomment in CMakeLists.txt:
 
 2. In include_directories you want to uncomment "include".
 
-3. You wnat to declare your .cpp file as an executable, so head to  approximatly line 135 and uncomment "add_executable(${PROJECT_NAME}_node src/publisher_cpp.cpp". After "src/" it is important that you write the filename of the .cpp file you want to make an executable.
+3. You want to declare your .cpp file as an executable, so head to  approximatly line 135 and uncomment "add_executable(${PROJECT_NAME}_node src/publisher_cpp.cpp". After "src/" it is important that you write the filename of the .cpp file you want to make an executable.
 
 4. You want to uncomment "add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})"
 
