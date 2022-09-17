@@ -10,11 +10,12 @@
 * create a launch file for automatically launching the nodes
 
 Commands needed for the tutorial can be found at the bottom of the document. 
-### Installing ROS and catkin
-Follow the steps in the ROS-wiki, and install the "Desktop version".
-
+### Installing ROS, catkin and vscode
+Follow the steps in the ROS-wiki, and install the "Desktop version":
 http://wiki.ros.org/noetic/Installation/Ubuntu
 
+To install visual studio code on you linux computer:
+https://code.visualstudio.com/download
 
 ### Prelimenaries
 
@@ -185,8 +186,6 @@ orientation:
 
 ### Task 2: Create a package containing a publisher (C++ or Python)
 By the end of task 2 you will be able to make catkin packages, be familiar with what a branch is and the commands: git add, git commit and git push.
-
-For this task you will need visual studio code on you linux computer. Download link can be found here: https://code.visualstudio.com/download
 
 You can either look around in the training repo or head over to ROS-tutorials http://wiki.ros.org/ROS/Tutorials if you need inspiration on how to write a publisher in either C++ or Python. In order to validate that your package works you can try to listen to the node you made. A nice tip is to use the code for a publisher in the ros wiki, and use that to see if you can get the node to run. 
 
