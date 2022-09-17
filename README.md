@@ -18,7 +18,7 @@ http://wiki.ros.org/noetic/Installation/Ubuntu
 
 ### Prelimenaries
 
-ROS is short for Robot operating system. This is the middelware we use on our AUV to communicate between all our systems. ROS allows for programs to communicate over a defined API with ROS messages and services. It enables programs to run on multiple computers and communicates over the network. ROS modules can also run on different laguages such as C++ and Python.
+ROS is short for Robot operating system. This is the middelware we use on our drones to communicate between all our systems. ROS allows for programs to communicate over a defined API with ROS messages and services. It enables programs to run on multiple computers and communicates over the network. ROS modules can also run on different laguages such as C++ and Python.
 
 Catkin is the build system for ROS. The tutorial will not go in depth on exactly how catkin works, but for those interested you can read up on catkin here: https://nu-msr.github.io/me495_site/lecture02_catkin.html
 
@@ -26,7 +26,7 @@ This tutorial will mainly focus on nodes. A node is a single purpose executable 
 
 ROS has its own standard messsages and services (you will learn about services later) but it is also possible to create your own custom messages and custom services.
 
-It is recommendedd to have a look at the ROS lecture slides at found at the university of zurich if you want a good primer to what ROS is and how it works.
+It is recommended to have a look at the ROS lecture slides at found at the university of zurich if you want a good primer to what ROS is and how it works.
 https://rsl.ethz.ch/education-students/lectures/ros.html
 
 
@@ -35,7 +35,7 @@ https://rsl.ethz.ch/education-students/lectures/ros.html
 Task 1 will go through how to make a catkin workspace, how to run a node, and how to listen to a topic.
 
 You need at least three terminal windows open for this part. 
-* One terminal window to run the node (this will be the termianl that you will build the workspace in.)
+* One terminal window to run the node (this will be the terminal that you will build the workspace in.)
 * One terminal to run a roscore
 * One terminal to listen to the node
 
@@ -50,13 +50,13 @@ mkdir = make directory
 
 Note that the name can be whatever you desire, however, adding "_ws" at the end makes it easy to remember that this folder is a workspace.
 
-A certain architecture is required for the code to build and run properly. Therefore a src folder must be created inside the workspace:
+A certain architecture is required for the code to build and run properly, such as having a src directory inside the workspace. This is done by using the following command:
 
 ```
-mkdir src
+mkdir name_of_your_choice_ws/src
 ```
 
-Move to the src folder (cd = change directory), then clone the software-learning-period repository from github:
+Move to the src folder, then clone the software-learning-period repository from github:
 ```
 cd name_of_your_choice_ws/src
 
@@ -66,10 +66,10 @@ git clone https://github.com/vortexntnu/software-learning-period.git
 
 In order to compile and link the catkin packages inside the repository we need to use the command "catkin build" while located at the workspace folder you created. 
 ```
-cd ../..
+cd ..
 catkin build
 ```
-One dot means "this folder" and two dots means "previous folder". The command in the first line therefore means that you are moving 2 layers of folders back according to the path to the folder you currently are in.
+One dot means "this folder" and two dots means "previous folder". The command in the first line therefore means that you are moving 1 layer of folders back relative to your current directory.
 
 To read more on catkin workspaces http://wiki.ros.org/catkin/workspaces.
 
