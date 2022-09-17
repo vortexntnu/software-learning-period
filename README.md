@@ -16,6 +16,13 @@ Follow the steps in the ROS-wiki, and install the "Desktop version".
 http://wiki.ros.org/noetic/Installation/Ubuntu
 
 
+If you are able to use catkin_make and you are able to source ros, but catkin build does not work then use the command:
+
+```
+sudo apt install python3-catkin-tools python3-osrf-pycommon
+```
+
+
 ### Prelimenaries
 
 ROS is short for Robot operating system. This is the middelware we use on our drones to communicate between all our systems. ROS allows for programs to communicate over a defined API with ROS messages and services. It enables programs to run on multiple computers and communicates over the network. ROS modules can also run on different laguages such as C++ and Python.
