@@ -402,15 +402,3 @@ If you have been messing around in CMakeLists.txt then it is important to use th
 ```
 catkin clean
 ```
-
-
-Example: 
-```
- rostopic pub /topic_name std_msgs/String hello
-```
-
-If you wnat to change directory to a package you can use roscd.
-
-```
-roscd [package name]
-```
