@@ -16,13 +16,6 @@ Follow the steps in the ROS-wiki, and install the "Desktop version".
 http://wiki.ros.org/noetic/Installation/Ubuntu
 
 
-If you are able to use catkin_make and you are able to source ros, but catkin build does not work then use the command:
-
-```
-sudo apt install python3-catkin-tools python3-osrf-pycommon
-```
-
-
 ### Prelimenaries
 
 ROS is short for Robot operating system. This is the middelware we use on our drones to communicate between all our systems. ROS allows for programs to communicate over a defined API with ROS messages and services. It enables programs to run on multiple computers and communicates over the network. ROS modules can also run on different laguages such as C++ and Python.
@@ -79,6 +72,12 @@ catkin build
 One dot means "this folder" and two dots means "previous folder". The command in the first line therefore means that you are moving 1 layer of folders back relative to your current directory.
 
 To read more on catkin workspaces http://wiki.ros.org/catkin/workspaces.
+
+If you are able to use the command catkin_make and sourcing ros (source /opt/ros/noetic/setup.bash), but the command catkin build does not work, then use the command:
+
+```
+sudo apt install python3-catkin-tools python3-osrf-pycommon
+```
 
 ### Task 1.2 Sourcing ros and running roscore
 
