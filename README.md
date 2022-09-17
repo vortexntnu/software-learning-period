@@ -397,6 +397,13 @@ rostopic echo /topic
 
 If you want to publish to a topic in terminal you can use the "rostopic pub" command.
 
+If you have been messing around in CMakeLists.txt then it is important to use the "catkin clean" command. You need to use this command in you workspace folder, and then build your repo again.
+
+```
+catkin clean
+```
+
+
 Example: 
 ```
  rostopic pub /topic_name std_msgs/String hello
