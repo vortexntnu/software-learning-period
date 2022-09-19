@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  ros:
+    container_name: software-training-period
+    image: fkon/ros:v1
+    user: vortex
+    privileged: true
+    # insert your workspace, which documents/folders to be availabe within the docker container.
+    volumes:
+      # example: - ~/OneDrive/Documents:/home/vortex
+      - <insert your path>:/home/vortex
+      - /dev:/dev
+    stdin_open: true
+    tty: true
+    environment:
+      DISPLAY: :0
+    network_mode: host
