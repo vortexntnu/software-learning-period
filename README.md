@@ -30,14 +30,14 @@ docker compose up -d
 ```
 docker ps
 ```
-to find the name of the docker container. 
+to find the name of the docker container. By default, the container name should be *software-training-period*.
 
 To enter the container and execute commands, input the command
 ```
 docker exec -it <container-name> /bin/bash
 ```
 
-You are now inside of the docker container - this enables you to use all of the linux commands and ROS, as if you would be using a linux machine. When the tasks ask you to open a new terminal window, open a new terminal window and exec into the container again.
+You are now inside of the docker container - this enables you to use all of the linux commands and ROS, as if you would be using a linux machine. When the tasks ask you to open a new terminal window, open a new terminal window and exec into the container again. If you need to run any commands with administrator privileges (i.e. sudo), the user password is "vortex". 
 
 ## Preliminaries
 
