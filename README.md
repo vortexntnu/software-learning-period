@@ -17,6 +17,8 @@ http://wiki.ros.org/noetic/Installation/Ubuntu
 To install visual studio code on you linux computer:
 https://code.visualstudio.com/download
 
+If you do not have or are unable to use linux, you can use docker. You will need docker, download docker desktop for the OS you are using and make sure docker is running. Edit the docker-compose file, the compose file will produce a docker container with a shard volume (storage) between your computer and the container. A shard volumes allows you to edit ROS files normally (on your computer regardless of OS) and run ROS commands within the docker container based on the files you edited. But to achive this you need to edit the file path within the docker-compose file, so the container can knows which files are to be shard. When the docker-compose file is edited, use the command "docker compose up -d", this will target the docker-compose.yml file and produce a docker container. Use docker desktop's GUI or the command "docker ps" to find the name of the docker container. To enter the container and execute commands use "docker exec -it <container-name> /bin/bash". When the tasks ask you to open a new terminal window, open a new terminal window and exec into the container agian.
+
 ### Prelimenaries
 
 ROS is short for Robot operating system. This is the middelware we use on our drones to communicate between all our systems. ROS allows for programs to communicate over a defined API with ROS messages and services. It enables programs to run on multiple computers and communicates over the network. ROS modules can also run on different laguages such as C++ and Python.

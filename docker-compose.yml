@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  ros:
+    container_name: ros
+    image: fkon/ros:v1
+    
+    # insert your workspace, which documents/folders to be availabe within the docker container.
+    volumes: 
+      # example: - ~/OneDrive/Documents:/home/vortex
+      - <insert your path>:/home/vortex
+    stdin_open: true
+    tty: true
