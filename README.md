@@ -423,10 +423,10 @@ If you want to exit nano then you can use (ctrl + x)
 You will the be prompted if you wold like to save your changes. You can decide weather to save or dicard by typing (N) or (Y).
 
 
-If you want to make something executable you can use the "chmod -x" command.
+If you want to make something executable you can use the "chmod +x" command.
 
 ```
-chmod -x myfile.py
+chmod +x myfile.py
 ```
 
 If you want to listen to a topic in terminal you can use the "rostopic echo" command.
