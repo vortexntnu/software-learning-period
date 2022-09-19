@@ -17,17 +17,37 @@ http://wiki.ros.org/noetic/Installation/Ubuntu
 To install visual studio code on you linux computer:
 https://code.visualstudio.com/download
 
-If you do not have or are unable to use linux, you can use docker. You will need docker, download docker desktop for the OS you are using and make sure docker is running. Edit the docker-compose file, the compose file will produce a docker container with a shard volume (storage) between your computer and the container. A shard volumes allows you to edit ROS files normally (on your computer regardless of OS) and run ROS commands within the docker container based on the files you edited. But to achive this you need to edit the file path within the docker-compose file, so the container can knows which files are to be shard. When the docker-compose file is edited, use the command "docker compose up -d", this will target the docker-compose.yml file and produce a docker container. Use docker desktop's GUI or the command "docker ps" to find the name of the docker container. To enter the container and execute commands use "docker exec -it <container-name> /bin/bash". When the tasks ask you to open a new terminal window, open a new terminal window and exec into the container agian.
+### For Mac and other non-linux OS
+If you do not have or are unable to use linux, you can use Docker to complete this tutorial. 
 
-### Prelimenaries
+To download Docker Desktop, follow the steps in https://www.docker.com/ for the OS you are using. Make sure docker is running by following the guide to the end.
 
-ROS is short for Robot operating system. This is the middelware we use on our drones to communicate between all our systems. ROS allows for programs to communicate over a defined API with ROS messages and services. It enables programs to run on multiple computers and communicates over the network. ROS modules can also run on different laguages such as C++ and Python.
+Edit the docker-compose file, the compose file will produce a docker container with a shard volume (storage) between your computer and the container. A shared volume allows you to edit ROS files normally (on your computer regardless of OS) and run ROS commands within the Docker container based on the files you edited. To achieve this you need to edit the file path within the docker-compose file, so the container knows which files are to be shared. When the docker-compose file is edited, use the command
+```
+docker compose up -d
+```
+, this will target the docker-compose.yml file and produce a docker container. Use docker desktop's GUI or the command 
+```
+docker ps
+```
+to find the name of the docker container. 
 
-Catkin is the build system for ROS. The tutorial will not go in depth on exactly how catkin works, but for those interested you can read up on catkin here: https://nu-msr.github.io/me495_site/lecture02_catkin.html
+To enter the container and execute commands, input the command
+```
+docker exec -it <container-name> /bin/bash
+```
+
+You are now inside of the docker container - this enables you to use all of the linux commands and ROS, as if you would be using a linux machine. When the tasks ask you to open a new terminal window, open a new terminal window and exec into the container again.
+
+## Preliminaries
+
+ROS is short for Robot operating system. This is the middleware we use on our drones to communicate between all our systems. ROS allows for programs to communicate over a defined API with ROS messages and services. It enables programs to run on multiple computers and communicates over the network. ROS modules can also run on different laguages such as C++ and Python.
+
+**Catkin** is the build system for ROS. The tutorial will not go in depth on exactly how catkin works, but for those interested you can read up on catkin here: https://nu-msr.github.io/me495_site/lecture02_catkin.html
 
 This tutorial will mainly focus on nodes. A node is a single purpose executable program organized in packages. Nodes communicate over topics, which again is a name for a stream of messages. 
 
-ROS has its own standard messsages and services (you will learn about services later) but it is also possible to create your own custom messages and custom services.
+ROS has its own standard messsages and services (you will learn about services later), but it is also possible to create your own custom messages and custom services.
 
 It is recommended to have a look at the ROS lecture slides at found at the university of zurich if you want a good primer to what ROS is and how it works.
 https://rsl.ethz.ch/education-students/lectures/ros.html
@@ -49,7 +69,7 @@ A catkin workspace is a folder where you modify, build, and install catkin packa
 ```
 mkdir name_of_your_choice_ws
 ```
-mkdir = make directory
+_`mkdir` = make directory_
 
 Note that the name can be whatever you desire, however, adding "_ws" at the end makes it easy to remember that this folder is a workspace.
 
@@ -59,28 +79,33 @@ A certain architecture is required for the code to build and run properly, such 
 mkdir name_of_your_choice_ws/src
 ```
 
+
 Move to the src folder, then clone the software-learning-period repository from github:
 ```
 cd name_of_your_choice_ws/src
 
-git clone https://github.com/vortexntnu/software-learning-period.git
 
+git clone https://github.com/vortexntnu/software-learning-period.git
 ```
+_`cd` = change directory_
+
 
 In order to compile and link the catkin packages inside the repository we need to use the command "catkin build" while located at the workspace folder you created. 
 ```
 cd ..
 catkin build
 ```
-One dot means "this folder" and two dots means "previous folder". The command in the first line therefore means that you are moving 1 layer of folders back relative to your current directory.
+One dot `.` means "this folder", and two dots `..` means "previous folder". The command in the first line therefore means that you are moving 1 layer of folders back relative to your current directory.
 
 To read more on catkin workspaces http://wiki.ros.org/catkin/workspaces.
 
-If you are able to use the command catkin_make and sourcing ros (source /opt/ros/noetic/setup.bash), but the command catkin build does not work, then use the command:
 
+If the command `catkin build` throws errors, but you're able to source ROS using `source /opt/ros/noetic/setup.bash`, install additional packages using: 
 ```
 sudo apt install python3-catkin-tools python3-osrf-pycommon
 ```
+Command `catkin build` should be working now.
+
 
 ### Task 1.2 Sourcing ros and running roscore
 
@@ -194,7 +219,7 @@ You can either look around in the training repo or head over to ROS-tutorials ht
 Task 2 will mainly walk you through the version control tool git and the "janitor work" that needs to be done in order for your node to be able to run in your newly made catkin package.
 
 
-### Task 2 prelimenaries for git
+### Task 2 preliminaries for git
 
 At Vortex NTNU we organize our code in repositories, and use a tool called git for version control. Each repository contains the codebase for a specific system. These repositories are stored at Github, and each of these repositories has different versions.
 
@@ -220,7 +245,7 @@ git checkout -b "yourName/Task_2"
 Once you are on your branch you can navigate to the your_code directory. Then use the "catkin_create_pkg" command:
 
 ```
-catkin_create_pkg [package name] [dependency 1] [dependency 2]
+catkin_create_pkg [package name] [dependency 1] [dependency 2] [dependency n]
 ```
 
 Example:
@@ -237,10 +262,10 @@ Info on the content of a CMakeLists.txt can be found here: http://wiki.ros.org/c
 
 ### Task 2.2 Writing a publisher (Python)
 
-Once your package has been created you should rename your src folder to scripts and create a new python file inside your new scripts folder. It is important to add the shebang "#!/usr/bin/env python" at the top of you python file. This is used to tell the kernel which interpreter should be used to run the commands present in the file. Once the shebang is added you can write your script, but you will need to make it an executable before being able to use either python3 or rosrun to execute your python file. This can be done by using the "chmod -x" command.
+Once your package has been created you should rename your src folder to scripts and create a new python file inside your new scripts folder. It is important to add the shebang "#!/usr/bin/env python3" at the top of you python file. This is used to tell the kernel (linux core) which interpreter should be used to run the commands present in the file. Once the shebang is added you can write your script, but you will need to make it an executable before being able to use either python3 or rosrun to execute your python file. This can be done by using the "chmod -x" command.
 
 ```
-chmod -x [filname]
+chmod -x [filename]
 ```
 
 Example:
@@ -249,10 +274,17 @@ Example:
 chmod -x myPythonNode.py
 ```
 
+Now you can try to run the python node with rosrun! An example:
+```
+rosrun myPackage myPythonNode.py
+```
+To check that your node is publishing data, use the following command in a separate terminal window (remember to source ros):
+```
+rostopic echo /your_topic_name_here
+```
+If your node is publishing data, there should be printouts from your program appearing in the terminal window.
 
 ### Task 2.2 Writing a publisher (C++)
-
-
 
 If you created your package and listed roscpp as a dependency, then an include folder was also created. Inside this folder there is another folder with the same name as your package. Here you can create you header file. In order to link your header file to your .cpp file (which should be located in the src folder) and make your .cpp file an executable you need to make some changes to CMakeLists.txt.
 
@@ -272,9 +304,17 @@ There are several lines you need to uncomment in CMakeLists.txt:
 
 Now you need to head over to your workspace folder and use catkin build, and source your workspace.
 
-Now you can try to run the node with rosrun!
+Now you can try to run the node with rosrun! An example:
+```
+rosrun myPackage myPackageNode
+```
+To check that your node is publishing data, use the following command in a separate terminal window (remember to source ros):
+```
+rostopic echo /your_topic_name_here
+```
+If your node is publishing data, there should be printouts from your program appearing in the terminal window.
 
- If you would like more explanations as for how CMakeLists.txt works, you can snoop around in the CMakeLists.txt in the talker_cpp package located in tutorial packages.
+*If you would like more explanations as for how CMakeLists.txt works, you can snoop around in the CMakeLists.txt in the talker_cpp package located in tutorial packages.*
 
 ###  Task 2.2 Using git
 When you have created your files you can first "stage" them by using the command "git add", this makes it possible to commit the changes later.
@@ -286,7 +326,7 @@ git add /filename
 Once all your files have been staged you can commit them by using the command "git commit"
 
 ```
-git commit -m"A commit message."
+git commit -m "A commit message."
 ```
 
 Making a commit is similar to making a savepoint, as you can revert commits. A commit always comes along with a commit message. This message should be as precise as possible in regards to exactly what changes you have done.
