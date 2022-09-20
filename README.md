@@ -262,16 +262,16 @@ Info on the content of a CMakeLists.txt can be found here: http://wiki.ros.org/c
 
 ### Task 2.2 Writing a publisher (Python)
 
-Once your package has been created you should rename your src folder to scripts and create a new python file inside your new scripts folder. It is important to add the shebang "#!/usr/bin/env python3" at the top of you python file. This is used to tell the kernel (linux core) which interpreter should be used to run the commands present in the file. Once the shebang is added you can write your script, but you will need to make it an executable before being able to use either python3 or rosrun to execute your python file. This can be done by using the "chmod -x" command.
+Once your package has been created you should rename your src folder to scripts and create a new python file inside your new scripts folder. It is important to add the shebang "#!/usr/bin/env python3" at the top of you python file. This is used to tell the kernel (linux core) which interpreter should be used to run the commands present in the file. Once the shebang is added you can write your script, but you will need to make it an executable before being able to use either python3 or rosrun to execute your python file. This can be done by using the "chmod +x" command.
 
 ```
-chmod -x [filename]
+chmod +x [filename]
 ```
 
 Example:
 
 ```
-chmod -x myPythonNode.py
+chmod +x myPythonNode.py
 ```
 
 Now you can try to run the python node with rosrun! An example:
@@ -423,10 +423,10 @@ If you want to exit nano then you can use (ctrl + x)
 You will the be prompted if you wold like to save your changes. You can decide weather to save or dicard by typing (N) or (Y).
 
 
-If you want to make something executable you can use the "chmod -x" command.
+If you want to make something executable you can use the "chmod +x" command.
 
 ```
-chmod -x myfile.py
+chmod +x myfile.py
 ```
 
 If you want to listen to a topic in terminal you can use the "rostopic echo" command.
