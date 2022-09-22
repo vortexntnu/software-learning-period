@@ -251,7 +251,7 @@ catkin_create_pkg --rosdistro noetic [package name] [dependency 1] [dependency 2
 Example:
 
 ```
-catkin_create_pkg myPackage std_msgs rospy roscpp
+catkin_create_pkg --rosdistro noetic myPackage std_msgs rospy roscpp
 ```
 The command above will make a package called myPackage which is dependent on std_msgs rospy and roscpp. "std_msgs" is a package containing all the standard messages for ros. You need the rospy package if you want to write a node in Python, and roscpp if you want to make a node in c++.  It will also generate a new folder called myPackage. This folder will contain an empty src folder, a CMakeLists.txt and a package.xml file. 
 
