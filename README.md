@@ -245,7 +245,7 @@ git checkout -b "yourName/Task_2"
 Once you are on your branch you can navigate to the your_code directory. Then use the "catkin_create_pkg" command:
 
 ```
-catkin_create_pkg [package name] [dependency 1] [dependency 2] [dependency n]
+catkin_create_pkg --rosdistro noetic [package name] [dependency 1] [dependency 2] [dependency n]
 ```
 
 Example:
