@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+  tutorial:
+    container_name: tutorial
+    image: vortex:tutorial # Task 2
+    tty: true # Task 2
+    stdin_open: true # Task 2
+
+  tutorial-two:
+    container_name: tutorial2
+    image: vortex:tutorial
+    tty: true 
+    stdin_open: true 
+
+  tutorial-three:
+    container_name: tutorial3
+    image: vortex:tutorial
+    tty: true 
+    stdin_open: true 
+
