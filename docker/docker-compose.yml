@@ -11,10 +11,4 @@ services:
     image: vortex:tutorial
     tty: true 
     stdin_open: true 
-
-  tutorial-three:
-    container_name: tutorial3
-    image: vortex:tutorial
-    tty: true 
-    stdin_open: true 
-
+    #entrypoint: ["/bin/bash"]
