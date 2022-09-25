@@ -15,8 +15,11 @@ This section is intended to be a lookup for whenever you are working with Docker
 
 | **Command** |  **Description**  |
 |-------------|-------------------|
-| docker ps -a |   |
-| docker image ls |   |
+| docker ps -a |  List all active docker processes |
+| docker image ls | List local docker images  |
+| docker pull <image> | Pull a docker image hosted remotely |
+| docker compose up/down | Start/stop services defined in a docker-compose.yml file |
+| docker image prune | Remove images that are either untagged or not used by an active or stoppped container |
 
 ## Write your Dockerfile
 The `Dockerfile` is the recipe in which you will need to specify how to set up the virtual environment for our example program. 
