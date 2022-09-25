@@ -9,6 +9,11 @@ Before you start, make sure that you have Docker and Docker Compose installed on
 [Download Docker Desktop for Mac](https://docs.docker.com/desktop/install/mac-install/)  
 [Download Docker Desktop for Windows](https://docs.docker.com/desktop/install/windows-install/)
 
+## Notes
+Any time you wish to run a docker command on Linux, use "sudo docker" instead. The same goes for compose. This will save you from trouble later down the road. Alternatively you may follow the [Manage Docker as a non-root user](https://docs.docker.com/engine/install/linux-postinstall/) tutorial.
+
+When following this guide, make sure to clone the repository and use the existing Docker and docker-compose files in the docker/ directory.
+
 
 ## Helpful commands
 This section is intended to be a lookup for whenever you are working with Docker. It contains a list of common commands and usage patterns. Will be updated on the fly.
