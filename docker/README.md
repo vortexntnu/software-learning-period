@@ -13,8 +13,10 @@ Before you start, make sure that you have Docker and Docker Compose installed on
 ## Helpful commands
 This section is intended to be a lookup for whenever you are working with Docker. It contains a list of common commands and usage patterns. Will be updated on the fly.
 
-* docker ps -a
-* docker image ls
+| **Command** |  **Description**  |
+|-------------|-------------------|
+| docker ps -a |   |
+| docker image ls |   |
 
 ## Write your Dockerfile
 The `Dockerfile` is the recipe in which you will need to specify how to set up the virtual environment for our example program. 
