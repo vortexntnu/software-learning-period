@@ -33,7 +33,7 @@ This is a custom service that sends a list of floats as a request to the server,
 
 ## Task 1: Make your own service
 
-The goal is to make a sevice called AddTwoInts that is located in its own package, and create a server that is dependent on ADDTwoInts. You will then send a request to the server using a terminal.
+The goal is to make a sevice called AddTwoInts that is located in its own package, and create a server that is dependent on AddTwoInts. You will then send a request to the server using a terminal.
 
 1. Create a package for your services.
 
@@ -45,7 +45,7 @@ The goal is to make a sevice called AddTwoInts that is located in its own packag
 
 5. Write a response message such that the server returns an int.
 
-6. Create a package containing your server, that is dependent on rospy and the package containing your services.
+6. Create a package containing your server that is dependent on rospy and the package containing your services.
 
 7. Run your server and use the terminal to send a request.
 
