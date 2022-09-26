@@ -51,10 +51,9 @@ The goal is to make a sevice called AddTwoInts that is located in its own packag
 
 Feel free to write in either python or c++.
 
-A nice walktrough in how to do this task with Actions rather than services can be found here: https://roboticsbackend.com/ros-create-custom-action/.
+A nice walktrough on how to make sure CMakelists.txt and package.xml is set up correctly for Actions rather than services can be found here: https://roboticsbackend.com/ros-create-custom-action/. Actions are similar to services, but are used for longer running processes. And are composed of three messages insted of one.
 
-You can follow this tutorial if you remove  "actionlib_msgs" in both the CMakelists and package.xml. 
-
+You can configure CMakelists.txt and package.xml the same way as in the walktrough if you remove "actionlib_msgs" in both the CMakelists.txt and package.xml. 
 
 Pro tip : 
 Both custom and standard services are located in packages. If you would like to use a service you must add the package containing the services as a dependency to your own package.
