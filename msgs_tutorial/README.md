@@ -11,12 +11,19 @@ Earlier in the learning period, you learned how to publish data from a node. The
 ## ROS inbuilt messages
 Ros has a lot of predefined messages from several libraries. Some of the libraries are std_msgs, geometry_msgs, actionlib_msgs. 
 To get an overview of all message types, use the command 
-'''rosmsg list'''
+```
+rosmsg list
+```
 
 To get information about a specific type of message, use the command 
-'''rosmsg info library/type '''
+```
+rosmsg info library/type
+```
+
 For example
-'''rosmsg info geometry_msgs/Point'''
+```
+rosmsg info geometry_msgs/Point
+```
 
 ### Standard messages (std_msgs)
 Std_msgs are the most primitive messages, and consist of only one variable. Some examples are String, Int32, Int64, Float32, Bool, Char. Note that when defining variables of these data types, the name of the data types must be std_msgs/Int32, and so on. Also note the capital letters.
@@ -37,14 +44,18 @@ Sometimes you want to have a specific msg type that does not exist in ROS. You c
     - First, you have to create an empty msg of the chosen type, then set values for the attributes in the empty msg and at last publish the msg.
     - Tip 1: use the commands mentioned earlier to list all msg types and to get information about a msg type. You can also use Google to find this information.
     - Tip 2: to be able to use msgs, they must be included. Example from a .py file:
-    '''from geometry_msgs.msg import Point'''
+    ```
+    from geometry_msgs.msg import Point
+    ```
 3. Optional, but recommended to get to know the different types of msgs: repeat step 2, where you create several publishers that publish different types of msgs.
 
 ### Task 2 - creating and publishing custom messages
 1. Create a package called my_msgs. In this package, create a folder called msg.
 2. Create a file of type .msg inside the msg folder and give the file a suitable name for what you want the msg to represent.
 3. Create the msg by defining attributes (just like you would define normal variables): 
-'''datatype variable_name''' 
+```
+datatype variable_name
+```
 For inspiration, you can look in vortex-asv/vortex_msgs/msg on github.
 4. Create a new publisher in the node from task 1.
     - Tip 1: if you would like to use the msg you must add the package containing the msg as a dependency to the package where your node is located. This is because the msg is located in another package.
