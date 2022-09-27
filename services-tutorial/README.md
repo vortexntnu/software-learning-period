@@ -51,6 +51,9 @@ The goal is to make a sevice called AddTwoInts that is located in its own packag
 
 Feel free to write in either python or c++.
 
+You can find the code for a service node here: http://wiki.ros.org/ROS/Tutorials/WritingServiceClient%28python%29.
+You can also find out how to manage the CMakelists.txt and package.xml in ros tutorials if you poke around.
+
 A nice walktrough on how to make sure CMakelists.txt and package.xml is set up correctly for Actions rather than services can be found here: https://roboticsbackend.com/ros-create-custom-action/. Actions are similar to services, but are used for longer running processes. And are composed of three messages insted of one.
 
 You can configure CMakelists.txt and package.xml the same way as in the walktrough if you remove "actionlib_msgs" in both the CMakelists.txt and package.xml. 
