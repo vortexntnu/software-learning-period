@@ -1,0 +1,9 @@
+version: '3.8'
+services:
+  tutorial:
+    container_name:
+    image: 
+
+    # The below fields is equivalent to -it in docker run
+    tty: true 
+    stdin_open: true 
