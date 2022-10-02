@@ -34,7 +34,7 @@ An even more complex message type is the geometry_msgs/Pose. This message has at
 
 
 ## Custom messages
-Sometimes you want to have a specific msg type that does not exist in ROS. You can then create this msg, a  custom msg, yourself. In Vortex, we try to keep the number of custom msgs limited, but sometimes they are necessary, and it is also nice to know that they exist.
+Sometimes you want to have a specific msg type that does not exist in ROS. You can then create this msg, a  custom msg, yourself. In Vortex, we try to keep the number of custom msgs limited, but sometimes they are necessary, and it is also nice to know that they exist. When running a node that publishes a custom msg, you first have to wource your workspace. The reason why you have to do this with custom msgs but not with predefined ROS msgs, is that the custom msgs are located in your workspace.
 
 
 ## Tasks
