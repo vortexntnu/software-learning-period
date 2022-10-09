@@ -5,4 +5,7 @@ services:
     build:
       context: .
       dockerfile: dockerfile.nginx
-    # write your code
+    image: nginx:latest
+    ports:
+      - 80:80
+      - 443:80
