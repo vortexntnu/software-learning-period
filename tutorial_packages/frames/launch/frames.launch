@@ -16,10 +16,5 @@
           args="0 0 -0.145 -1.57 3.14 0 base_link uns_link"
     />
 
-    <!-- <node pkg="tf2_ros"
-          type="static_transform_publisher"
-          name="base_link_to_UNS_ahrs"
-          args="0 0 -0.145 0 0 3.14159 base_link uns_link_ahrs"
-    /> -->
 
 </launch> 

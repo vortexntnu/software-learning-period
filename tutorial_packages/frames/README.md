@@ -97,4 +97,39 @@ Your result should look like this:
 
 # Task 3: Dynamic transforms
 
-Goal: Use the provided data to transform something dynamically?
+So far, the transforms that you have created have been *static*, in the sense that the transformation between frames is independent of time, and is thus expressed as a constant value in a launch file. *Dynamic transforms* are introduced to express the relationship between two frames that evolve in time. For example, the pose estimate of the Beluga AUV can be expressed as a dynamic transformation between the *odom* and *base_link* frames.
+
+The file `dynamic_transforms.py` contains boiler plate code for a dynamic transform, and your goal is to make the *base_link* frame rotate about *odom* in the xy plane, with the forward direction of the *base_link* frame (Green) pointing in the direction of movement.
+
+
+## 3.1 Define the frame_id's
+
+The `transform` object in the provided python script requires two frames to be specified, namely the `transform.header.frame_id` and the `transform.child_frame_id`, which are the "from" and "to" frames respectively.
+
+Your first task is to define these in the code in accordance to the description above, so that the transformation is from *odom* to *base_link*
+
+## 3.2 Define the translation
+
+Since the body is supposed to move in a circle in the xy plane, the translation vector will be t = [cos(theta), sin(theta), 0].
+
+Define the `transform.transform.translation.?` for x, y and z.
+
+## 3.3 Define the rotation
+
+The rotation component of the `transform` is expressed as a quaternion. Since we are only dealing with yaw when wanting the body to point in the direction of travel in this case, we can use euler angles, converted to a quaternion, to populate the `transform.transform.rotation.?` fields.
+
+Use the function `tf_conversions.transformations.quaternion_from_euler()` to find the quaternion that represents the rotation between *odom* and *base_link* such that *base_link* points in the direction of travel. 
+
+Note that the quaternion convention used by tf2 is xyzw.
+
+Hint: The euler (rpy) representation of the rotation in question is [0, 0, theta], where theta is time-varying.
+
+## 3.4 Broadcast the transform and visualize
+
+You should now have a fully-populated `transform` object, and you can now use the `.sendTransform()` method on the `tf_broadcaster` object in order to publish the transformation.
+
+After this, you may run your code using the `dynamic.launch` file. Note that this file imports the previously defined `frames.launch`, so make sure that you have completed the other tasks beforehand!
+
+Once launched, open RViz once again, set the fixed frame to *odom* and add the TF object. If you have done everything right, you should see that *base_link* is rotating about *odom*, and that the sensor frames are rigidly attached to *base_link*:
+
+![task3](./img/dynamic_transforms.gif)  
