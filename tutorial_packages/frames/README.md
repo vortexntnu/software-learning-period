@@ -10,7 +10,7 @@ For notation, we stick with the [REP105 standard](https://www.ros.org/reps/rep-0
 For the current navigation solution of the Vortex AUVs, no external sensors can correct for drift in position, and for that reason, *odom* is the only world frame in question. However, for the ASV, GNSS is available, and as such, both frames may be relevant!
 
 # Task 1: Static transforms
-
+Static transform are coordinate frame transformations between two frames that do not move in relation to one another in time. As such, they can be defined offline using fixed parameters. Examples of such transforms can be the relationship between the chosen body frame of a drone, and the physical locations of all its sensors. The transformation between ENU and NED is also a static transform.
 
 ## 1.1 Run the example code
 
