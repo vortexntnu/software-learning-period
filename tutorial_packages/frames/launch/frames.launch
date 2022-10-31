@@ -6,14 +6,14 @@
         pkg="tf2_ros"
         type="static_transform_publisher"
         name="base_link_to_imu0"
-        args="0 0.094 0.16 -1.57 3.14 0 base_link imu_0"
+        args="0 0 0 0 0 0 base_link imu_0"
     />
 
     <!-- DVL -->
     <node pkg="tf2_ros"
           type="static_transform_publisher"
           name="base_link_to_UNS"
-          args="0 0 -0.145 -1.57 3.14 0 base_link uns_link"
+          args="0 0 0 0 0 0 base_link uns_link"
     />
 
 
