@@ -67,7 +67,7 @@ With the body frame expressed in NED, the IMU is placed 9.4 cm north and 16.0 cm
 
 Fix the arguments to the transforms in `frames.launch` and visualize the correct frames in RViz. Beware of notations and order of arguments!
 
- Your result should look like this:
+Your result should look like this:
 ![task1](./img/correct_task1.png)  
 
 
@@ -83,16 +83,16 @@ It just so happens that the EKF that Vortex NTNU uses - *robot_localization* - e
 * Blue: Up  
 
 While rotation about a single axis will correspond to:
-* Red: Roll  
-* Green: Pitch  
+* Red: Pitch  
+* Green: Roll 
 * Blue: Yaw  
 
+This poses somewhat of an annoyance, since the physical location of the IMU and DVL has not changed, but their transformations to the ENU frame *has*. Your task is to fix the static transforms in `frames.launch` in order to comply with base link in ENU.
 
+When visualizing this in RViz, the Invert Z Axis option should be **unchecked**.
 
-Goal: Make base_link an ENU frame, and the rest NED (Robot_localization assumes ENU convention for base link. However, the sensor frames must adhere to what is physically the case for the AUV)
-
-Solution: Swap x and y in the transforms, and apply correct rotations
-
+Your result should look like this:
+![task2](./img/correct_task2.png)  
 
 
 # Task 3: Dynamic transforms
