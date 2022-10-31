@@ -27,7 +27,7 @@ which generates a PDF at the location you ran the command that you can open to s
 
 ## 1.2 Use RViz to inspect your frames
 
-Assuming that you still have the nodes from the previous steps runnung, start RViz and set the following settings:
+Assuming that you still have the nodes from the previous steps running, start RViz and set the following settings:
 
 **Fixed  frame = base_link**  
 ![fixed_frame](./img/fixed_frame_option.png)  
@@ -35,7 +35,7 @@ This makes the pose of the scene attached to the body frame.
 
 **Invert Z Axis = checked**  
 ![invert](./img/invert_checked.png)  
-Since we define our frames in accordance with NED, we need this option ticked for things to make physical sense when using NED.
+Since we define our frames in accordance with NED, we need this option ticked for things to make physical sense when visualizing the frames.
 
 **Add the TF tree**  
 ![tftree](./img/add_TF_object.png)  
@@ -67,7 +67,7 @@ With the body frame expressed in NED, the IMU is placed 9.4 cm north and 16.0 cm
 
 Fix the arguments to the transforms in `frames.launch` and visualize the correct frames in RViz. Beware of notations and order of arguments!
 
-Your result should look like this:
+Your result should look like this:  
 ![task1](./img/correct_task1.png)  
 
 
@@ -91,7 +91,7 @@ This poses somewhat of an annoyance, since the physical location of the IMU and 
 
 When visualizing this in RViz, the Invert Z Axis option should be **unchecked**.
 
-Your result should look like this:
+Your result should look like this:  
 ![task2](./img/correct_task2.png)  
 
 
