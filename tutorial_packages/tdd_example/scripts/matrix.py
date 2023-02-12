@@ -10,9 +10,6 @@ class Matrix:
             initial_values (list): optional parameter to set array elements on creation
         """
 
-    def __str__(self):
-        return str(self.elements)
-
     def __add__(self, other):
         return
     
