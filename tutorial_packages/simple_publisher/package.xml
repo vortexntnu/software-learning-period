@@ -1,17 +1,18 @@
 <?xml version="1.0"?>
 <package format="3">
-  <name>listener</name>
+  <name>simple_publisher</name>
   <version>0.0.1</version>
-  <description>ROS2 C++ listener example</description>
-
+  <description>ROS2 simple publisher example</description>
   <maintainer email="jorgen.fjermedal@hotmail.com">jorgen fjermedal</maintainer>
-
   <license>MIT</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
   <depend>rclcpp</depend>
-  <depend>geometry_msgs</depend>
+  <depend>std_msgs</depend>
+  <depend>talker</depend> <!-- since we are launching a node from the talker package 
+  in the launch file it is good practice to add it to the dependency list. -->
+
 
   <export>
     <build_type>ament_cmake</build_type>
