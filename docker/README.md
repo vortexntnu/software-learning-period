@@ -20,7 +20,7 @@ Before getting started, make sure you have Docker installed:
 This setup assumes your local file tree follows a standard ROS 2 workspace layout:
 
 ```bash
-ros_ws/
+ros2_ws/
 ├── build/
 ├── log/
 ├── install/
