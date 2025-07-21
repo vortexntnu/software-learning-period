@@ -21,21 +21,16 @@ To install Visual Studio Code on your Linux computer:
 
 ### **For Mac and other non-Linux OS**
 
-If you do not have or are unable to use Linux, you can use Docker to complete this tutorial.
+If you're not using a native Ubuntu setup — or want a reproducible environment — you can use Docker to run this tutorial.
 
-To download Docker Desktop, follow the steps in [https://www.docker.com/](https://www.docker.com/) for the OS you are using. Make sure Docker is running by following the guide to the end.
+We’ve provided a ready-to-use Docker environment inside the [docker/](docker/) folder of this repository. It includes:
 
-Edit the `docker-compose.yml` file to share your ROS 2 workspace between your computer and the container. After editing, use:
+- A Dockerfile tailored for ROS 2 development
+- Easy build and run scripts (build.sh, run.sh)
+- Workspace mounting between host and container
+- You can use this setup on macOS, Windows (via WSL 2), or Linux.
 
-```bash
-docker compose up -d
-```
-
-Use `docker ps` to find the container name. By default, the container name should be `software-training-period`. To enter the container:
-
-```bash
-docker exec -it <container-name> /bin/bash
-```
+To get started, follow the instructions in the [docker/README.md](docker/README.md).
 
 -----
 
