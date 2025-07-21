@@ -14,10 +14,14 @@ IMAGE="software-learning-period:latest"  # Default Docker image name/tag
 # we log it for transparency.
 # ------------------------------------------------------------------------------
 
-if [[ "$(uname)" == "Darwin" ]]; then
+ARCHITECTURE="$(uname -m)"
+if [[ "$ARCHITECTURE" == "arm64" || "$ARCHITECTURE" == "aarch64" ]]; then
     PLATFORM="arm64"
-else
+elif [[ "$ARCHITECTURE" == "x86_64" ]]; then
     PLATFORM="amd64"
+else
+    echo "Unsupported architecture: $ARCHITECTURE" >&2
+    exit 1
 fi
 
 # ------------------------------------------------------------------------------

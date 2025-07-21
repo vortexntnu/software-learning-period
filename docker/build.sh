@@ -11,15 +11,15 @@ export BASE_IMAGE="ros:humble"                      # Base image for Docker buil
 # ------------------------------------------------------------------------------
 # Platform Detection
 # ------------------------------------------------------------------------------
-# On macOS (Darwin), force 'linux/arm64' (for Docker Desktop on Mac).
-# Otherwise, default to the host architecture.
-# NOTE: This is hardcoded for simplicity.
-# ------------------------------------------------------------------------------
 
-if [[ "$(uname)" == "Darwin" ]]; then
-    export PLATFORM="linux/arm64"
+ARCHITECTURE="$(uname -m)"
+if [[ "$ARCHITECTURE" == "arm64" || "$ARCHITECTURE" == "aarch64" ]]; then
+    PLATFORM="arm64"
+elif [[ "$ARCHITECTURE" == "x86_64" ]]; then
+    PLATFORM="amd64"
 else
-    export PLATFORM="linux/amd64"
+    echo "Unsupported architecture: $ARCHITECTURE" >&2
+    exit 1
 fi
 
 # ------------------------------------------------------------------------------
