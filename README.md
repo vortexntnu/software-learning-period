@@ -159,6 +159,23 @@ Add your C++ source file (e.g., `my_publisher.cpp`) to the `my_package/src/` dir
 
 Next, you must update `CMakeLists.txt` to build your code. Add the following lines to `CMakeLists.txt` to define your executable and link it to its dependencies:
 
+```cmake
+add_executable(my_publisher_node src/my_publisher.cpp)
+
+# Link the executable to its dependencies.
+# You must list every package that you #include headers from.
+ament_target_dependencies(my_publisher_node
+  rclcpp
+  std_msgs
+)
+
+# Install the executable so it can be run with `ros2 run`
+install(TARGETS
+  my_publisher_node
+  DESTINATION lib/${PROJECT_NAME}
+)
+```
+
 Learning CMake takes practice. A great way to start is by examining the CMakeLists.txt files in the `talker` and `listener` packages. Focus on understanding the essential commands that appear in most projects, as these are the fundamentals you'll use regularly.
 
 Now, build your workspace from the root (`~/ros2_ws`):
