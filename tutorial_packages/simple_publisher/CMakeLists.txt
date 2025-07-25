@@ -28,9 +28,6 @@ install(DIRECTORY # NB! Remember to install launch and config directories
     DESTINATION share/${PROJECT_NAME}
 )
 
-install(
-    DIRECTORY config
-    DESTINATION share/${PROJECT_NAME}
-)
+# Removed redundant installation block for the config directory.
 
 ament_package()
