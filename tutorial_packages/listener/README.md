@@ -11,7 +11,7 @@ To simplify the package creation process, you may run
 ros2 pkg create --build-type ament_cmake my_package --dependencies rclcpp std_msgs
 ```
 
-which will create a folder with name <package_name> with a template package.xml and CMakeLists.txt. Note that these contain a lot of unneccesary components
+which will create a folder with name ```my_package``` with a template package.xml and CMakeLists.txt. Note that these contain a lot of unneccesary components
 (most of them are commented out, but it's a good idea to remove everything that's not used, so the files here may still come in handy). For this package, the CMakeLists.txt and package.xml also contain a summary of the documentation that comes with the templates, and should be a bit easier to follow.
 
 Since this is a package with C++ as the primary language, it contains the src/ and include/ folders, which need to be linked to in CMakeLists.txt!
