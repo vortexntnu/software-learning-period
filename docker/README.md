@@ -1,109 +1,207 @@
-# Docker tutorial
-This folder contains an example Dockerfile and docker-compose.yml that serves as an example for the basics of Docker and Docker Compose. The sections below provide an annotated view of the docker files, as well as a short guide on how to use them.
+# 🐳 Docker Tutorial
 
-Note: The Dockerfile and docker-compose.yml are not finished, and you will need to use a fraction of what was presented in order to complete them.
+This folder contains a Docker-based development environment tailored for a standard ROS 2 workspace. It’s designed not just to work — but to help you **understand** how it works. This tutorial will walk you through the building blocks of Docker in a learning-oriented, hands-on way.
 
-Before you start, make sure that you have Docker and Docker Compose installed on the host machine. Docker Desktop comes with this and is fairly straight forward to install, but you may use whatever method you prefer.
- 
-[Download Docker Desktop for Ubuntu](https://docs.docker.com/desktop/install/ubuntu/)  
-[Download Docker Desktop for Mac](https://docs.docker.com/desktop/install/mac-install/)  
-[Download Docker Desktop for Windows](https://docs.docker.com/desktop/install/windows-install/)
+---
 
-## Notes
-Any time you wish to run a docker command on Linux, use "sudo docker" instead. The same goes for compose. This will save you from trouble later down the road. Alternatively you may follow the [Manage Docker as a non-root user](https://docs.docker.com/engine/install/linux-postinstall/) tutorial.
+## Prerequisites
 
-When following this guide, make sure to clone the repository and use the existing Docker and docker-compose files in the docker/ directory.
+Before getting started, make sure you have Docker installed:
 
+- [Docker Desktop (macOS/Windows)](https://www.docker.com/products/docker-desktop)
+- [Docker Engine (Linux)](https://docs.docker.com/engine/install/)
+  - On Linux, prefix commands with `sudo`, or configure Docker as a non-root user:  
+    👉 [Manage Docker as a non-root user](https://docs.docker.com/engine/install/linux-postinstall/)
 
-## Helpful commands
-This section is intended to be a lookup for whenever you are working with Docker. It contains a list of common commands and usage patterns. Will be updated on the fly.
+---
 
-| **Command** |  **Description**  |
-|-------------|-------------------|
-| docker ps -a |  List all active docker processes |
-| docker image ls | List local docker images  |
-| docker pull <image> | Pull a docker image hosted remotely |
-| docker compose up/down | Start/stop services defined in a docker-compose.yml file |
-| docker image prune | Remove images that are either untagged or not used by an active or stoppped container |
+## Expected Workspace Structure
 
-## Write your Dockerfile
-The `Dockerfile` is the recipe in which you will need to specify how to set up the virtual environment for our example program. 
+This setup assumes your local file tree follows a standard ROS 2 workspace layout:
 
-### FROM
-The first line in a Dockerfile is usually a *FROM* statement, which lets us build our image  on top of an existing one, instead of setting everything up from scratch. For our case we may simply use the base `ubuntu:20.04` image.
+```bash
+ros2_ws/
+├── build/
+├── log/
+├── install/
+└── src/
+    └── software-learning-period/
+        └── docker/
+            ├── Dockerfile
+            ├── build.sh
+            └── run.sh
+```
 
+---
 
-> Task: Set the base image to ubuntu:20.04
+## Step-by-Step Guide
 
+### 1. Clone the Repository
 
-### RUN
-Our example program requires python3 and so we will need to install it - since we are using the ubuntu base image, we may use apt to install python3.
+If you haven't already:
 
-> Task: apt install python3
+```bash
+git clone git@github.com:vortexntnu/software-learning-period.git
+cd software-learning-period
+```
 
-<details>
-  <summary>Hints</summary>
+### 2. Build the Docker Image
 
-* You will likely need to apt update and apt install in the same RUN  
+#### Ubuntu / Linux
+```bash
+cd docker
+chmod +x build.sh
+sudo ./build.sh
+```
+You may need to use sudo for Docker commands unless your user is added to the docker group.
+See: [Manage Docker as a non-root user](https://docs.docker.com/engine/install/linux-postinstall/)
 
-* The Dockerfile build step should be automated, but apt install python3 will ask you to enter Y/n. How can you automate this?  
-</details>
+#### macOS
+```bash
+cd docker
+chmod +x build.sh
+./build.sh
+```
+On macOS, Docker Desktop handles permissions, so sudo is usually not needed.
 
+**What this does**:
+- Builds a Docker image using the Dockerfile in this directory.
+- Tags the image as ```software-learning-period:latest```.
 
-### COPY
-To access files on the host machine inside a container without setting a volume, you will need to copy the files over manually.
+Inside the Dockerfile, you’ll find key instructions:
+- ```FROM```: Defines the base image (ros:humble)
+- ```COPY```: Copies your ROS workspace files
+- ```CMD```: Defines the default startup command (bash)
 
-> Task: Copy the entrypoint.sh and example_program.py files to the root of the container
+### 3. Run the Container
 
-<details>
-  <summary>Hints</summary>
+#### Ubuntu / Linux
+```bash
+chmod +x run.sh
+sudo ./run.sh
+```
 
-* pwd will point to the "context" of the Dockerfile when building. (What is a context?)
-</details>
+#### macOS
+```bash
+chmod +x build.sh
+./build.sh
+```
 
-### ENTRYPOINT
-The *ENTRYPOINT* statement determines the command that is executed when the image is deployed. The usual way to handle this is to let the ENTRYPOINT command run a shell script that contains the commands to run.
+**What this does**:
+- Starts a new interactive container from the image you built
+- Mounts your ROS workspace from your host into /ros2_ws inside the container
+- Opens a Bash shell so you can start working with ROS 2 right away
 
-> Task: Set the entrypoint to run the entrypoint.sh file
+### 4. Use ROS 2 Inside the Container
+Once inside the container:
+```bash
+colcon build
+ros2 launch my_package my_launch_file.launch.py
+```
 
-## Build your local image
-Building a local image is fairly easy, and although it may be somewhat time-consuming, it is a set-and-forget process. To build the example image you may use the `docker build` command, making sure to set the context to the folder in which the Docker file is located. To make latter steps a bit easier, you should also add a custom tag to your image. For information about docker build you may run the ```docker help build``` command.
+All build artifacts (```build/```, ```install/```, ```log/```) will remain on your host since the volume is mounted into the container.
 
-> Task: Build a local image with a custom tag
+## Docker Basics & Commands
 
-## Deploy your local image
-The simplest way to deploy an image is using the `docker run` command. It is good practice to use the `--rm` flag to ensure that docker cleans up after itself after running.
+Here are some helpful Docker commands you can reference:
 
-> Task: Run the vortex:tutorial image locally
+| **Command**                  | **Description**                          |
+|-----------------------------|------------------------------------------|
+| `docker ps -a`              | List all running and stopped containers  |
+| `docker images`             | Show all locally available images        |
+| `docker build -t <tag> .`   | Build image from a Dockerfile            |
+| `docker run -it <image>`    | Run container interactively              |
+| `docker rm <container>`     | Remove a stopped container               |
+| `docker rmi <image>`        | Remove an image                          |
+| `docker image prune`        | Remove unused images                     |
 
-You may optionally add the `-it` flags to open an interactive terminal with stdio. There are many other flags to add depending on your needs. Run the command ```docker help run``` for more info.
- 
-## Write your docker-compose.yml file
-While this example is very basic and realistically does not need any of the features that Docker Compose provides, it is still a good execise to just get familiar with the commands you are likely to use.
+---
 
-### Write a single service
-The boilerplate required to write a service is already in place in the docker-compose.yml file.
+## Task: Make Installed Packages Persistent
 
-> Task: Choose a container name and set the image to be the one we built in the previous steps
+One of the first things you'll notice when working in a container is that anything you install manually (e.g. with `apt`) is lost once the container is stopped and removed. To make installed tools available permanently, you must **bake them into the image** using the Dockerfile.
 
-### Start and stop services
-To run a service, you may use the ```docker compose run <service>``` command, and to run *all services* in a compose file you may simply use ```docker compose up```. To run services in the background, use the *-d* flag.
+Let's try it!
 
-> Task: Run your single service
+---
 
-To stop a service, use the command ```docker compose down```, and to stop and remove a service, use the command ```docker compose down```.
+### Task: Add `curl` to Your Image
 
-> Task: Stop and remove the service you previously started.
+You’ll now modify the Dockerfile to install a common tool: `curl`. This is just an example — the same approach works for Python packages, ROS tools, or anything else you need.
 
-### Multiple services
-You may define multiple services under the `services:` tag. Note that service names need to be unique 
+1. Open the file: `docker/Dockerfile`
+2. Add the following line just before the `COPY . .` line:
+```dockerfile
+RUN apt update && apt install -y curl
+```
 
-> Task: Duplicate the service you have already written and deploy them simultaneously. 
+Your Dockerfile will now look like this:
+```dockerfile
+# ------------------------------------------------------------------------------
+# Base Image
+# ------------------------------------------------------------------------------
+ARG BASE_IMAGE=ros:humble
+FROM ${BASE_IMAGE}
 
+# ------------------------------------------------------------------------------
+# Runtime Configuration
+# ------------------------------------------------------------------------------
+USER root
+SHELL ["/bin/bash", "-c"]
+ARG DEBIAN_FRONTEND=noninteractive
 
-### Overwriting entrypoints
-If you wish to debug or otherwise inspect the container but not run the entrypoint, you may overwrite it using the `entrypoint:` field.
+# ------------------------------------------------------------------------------
+# Workspace Setup
+# ------------------------------------------------------------------------------
+ENV WORKSPACE=/ros2_ws
+WORKDIR ${WORKSPACE}
 
-> Task: Replace the entrypoint of the second service to do nothing (i.e. run /bin/bash), then deploy them.
+# ------------------------------------------------------------------------------
+# Install system dependencies
+# ------------------------------------------------------------------------------
+RUN apt update && apt install -y curl
 
-In the last step you should see that only the service you altered will be restarted.
+# ------------------------------------------------------------------------------
+# Copy Workspace Files
+# ------------------------------------------------------------------------------
+COPY . .
+
+# ------------------------------------------------------------------------------
+# Default Startup Command
+# ------------------------------------------------------------------------------
+CMD ["bash"]
+```
+
+3. Rebuild the image
+```bash
+./build.sh
+```
+
+4. Run the container:
+```bash
+./run.sh
+```
+
+5. Inside the container, verify:
+```bash
+curl --version
+```
+
+You’ve now added a dependency to the image itself — no need to reinstall it every time you start a new container!
+
+```vbnet
+Tip: Whenever you find yourself installing something manually inside the container, ask yourself: Should this go in the Dockerfile instead?
+```
+
+---
+
+## Wrapping Up
+
+You now have a working introduction to using Docker with a ROS 2 workspace — complete with:
+
+- A preconfigured Dockerfile
+- Build and run scripts
+- Workspace volume mounting
+- Persistent image customization
+
+This setup serves as a **reusable starting point** for other ROS 2 projects. Feel free to **copy the entire `docker/` folder** into other repositories and adapt it to fit your needs.

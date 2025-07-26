@@ -1,444 +1,246 @@
-# Software learning period
+# Software Learning Period (C++ Edition)
 
- This is a tutorial to how some fundamental concepts of ROS works. More spesifically, you will learn how to:
+This is a tutorial for fundamental concepts in ROS 2. You will learn how to:
 
-* set up a workspace 
-* run a node
-* listen to a topic
-* create a node for publishing to a topic
-* create a node for subscribing to the same topic
-* create a launch file for automatically launching the nodes
+  * Set up a workspace
+  * Run a node
+  * Listen to a topic
+  * Create a C++ node for publishing to a topic
+  * Create a C++ node for subscribing to the same topic
+  * Create a launch file for automatically launching the nodes
 
-Commands needed for the tutorial can be found at the bottom of the document. 
-### Installing ROS, catkin and vscode
-Follow the steps in the ROS-wiki, and install the "Desktop version":
-http://wiki.ros.org/noetic/Installation/Ubuntu
+Commands needed for the tutorial can be found at the bottom of the document.
 
-To install visual studio code on you linux computer:
-https://code.visualstudio.com/download
+### **Installing ROS 2 and VS Code**
 
-### For Mac and other non-linux OS
-If you do not have or are unable to use linux, you can use Docker to complete this tutorial. 
+Follow the steps in the ROS 2 installation guide for your OS:
+[https://docs.ros.org/en/humble/Installation.html](https://docs.ros.org/en/humble/Installation.html)
 
-To download Docker Desktop, follow the steps in https://www.docker.com/ for the OS you are using. Make sure docker is running by following the guide to the end.
+To install Visual Studio Code on your Linux computer:
+[https://code.visualstudio.com/download](https://code.visualstudio.com/download)
 
-Edit the docker-compose file, the compose file will produce a docker container with a shard volume (storage) between your computer and the container. A shared volume allows you to edit ROS files normally (on your computer regardless of OS) and run ROS commands within the Docker container based on the files you edited. To achieve this you need to edit the file path within the docker-compose file, so the container knows which files are to be shared. When the docker-compose file is edited, use the command
-```
-docker compose up -d
-```
-, this will target the docker-compose.yml file and produce a docker container. Use docker desktop's GUI or the command 
-```
-docker ps
-```
-to find the name of the docker container. By default, the container name should be *software-training-period*.
+### **For Mac and other non-Linux OS**
 
-To enter the container and execute commands, input the command
-```
-docker exec -it <container-name> /bin/bash
-```
+If you're not using a native Ubuntu setup — or want a reproducible environment — you can use Docker to run this tutorial.
 
-You are now inside of the docker container - this enables you to use all of the linux commands and ROS, as if you would be using a linux machine. When the tasks ask you to open a new terminal window, open a new terminal window and exec into the container again. If you need to run any commands with administrator privileges (i.e. sudo), the user password is "vortex". 
+We’ve provided a ready-to-use Docker environment inside the [docker/](docker/) folder of this repository. It includes:
+
+- A Dockerfile tailored for ROS 2 development
+- Easy build and run scripts (build.sh, run.sh)
+- Workspace mounting between host and container
+- You can use this setup on macOS, Windows (via WSL 2), or Linux.
+
+To get started, follow the instructions in the [docker/README.md](docker/README.md).
+
+-----
 
 ## Preliminaries
 
-ROS is short for Robot operating system. This is the middleware we use on our drones to communicate between all our systems. ROS allows for programs to communicate over a defined API with ROS messages and services. It enables programs to run on multiple computers and communicates over the network. ROS modules can also run on different laguages such as C++ and Python.
+ROS 2 (Robot Operating System 2) is middleware for robotics, enabling communication between systems using messages and services. ROS 2 supports distributed systems, multiple languages (C++, Python), and modern networking.
 
-**Catkin** is the build system for ROS. The tutorial will not go in depth on exactly how catkin works, but for those interested you can read up on catkin here: https://nu-msr.github.io/me495_site/lecture02_catkin.html
+**Colcon** is the build system for ROS 2. Nodes are executables organized in packages. Nodes communicate over **topics** (streams of messages). ROS 2 supports custom messages and services.
 
-This tutorial will mainly focus on nodes. A node is a single purpose executable program organized in packages. Nodes communicate over topics, which again is a name for a stream of messages. 
+**Recommended:** Review ROS 2 documentation and tutorials:
+[https://docs.ros.org/en/humble/index.html](https://docs.ros.org/en/humble/index.html)
+[https://rsl.ethz.ch/education-students/lectures/ros.html](https://rsl.ethz.ch/education-students/lectures/ros.html)
 
-ROS has its own standard messsages and services (you will learn about services later), but it is also possible to create your own custom messages and custom services.
+-----
 
-It is recommended to have a look at the ROS lecture slides at found at the university of zurich if you want a good primer to what ROS is and how it works.
-https://rsl.ethz.ch/education-students/lectures/ros.html
+## Task 1: Running the nodes in the repository
 
+You need at least two terminal windows:
 
-### Task 1: Running the nodes in the repository
+  * One terminal to build and run nodes
+  * One terminal to listen to topics
 
-Task 1 will go through how to make a catkin workspace, how to run a node, and how to listen to a topic.
+### **Task 1.1: Creating and building a ROS 2 workspace**
 
-You need at least three terminal windows open for this part. 
-* One terminal window to run the node (this will be the terminal that you will build the workspace in.)
-* One terminal to run a roscore
-* One terminal to listen to the node
+A ROS 2 workspace is a folder for modifying, building, and installing packages. To create a workspace:
 
-### Task 1.1: Creating and building a catkin workspace
-
-A catkin workspace is a folder where you modify, build, and install catkin packages. To create a workspace, open the terminal (ctrl + Alt + T) and run the following command:
-
-```
-mkdir name_of_your_choice_ws
-```
-_`mkdir` = make directory_
-
-Note that the name can be whatever you desire, however, adding "_ws" at the end makes it easy to remember that this folder is a workspace.
-
-A certain architecture is required for the code to build and run properly, such as having a src directory inside the workspace. This is done by using the following command:
-
-```
-mkdir name_of_your_choice_ws/src
+```bash
+mkdir -p ~/ros2_ws/src
+cd ~/ros2_ws
 ```
 
+Clone the repository:
 
-Move to the src folder, then clone the software-learning-period repository from github:
-```
-cd name_of_your_choice_ws/src
-
-
+```bash
+cd src
 git clone https://github.com/vortexntnu/software-learning-period.git
-```
-_`cd` = change directory_
-
-
-In order to compile and link the catkin packages inside the repository we need to use the command "catkin build" while located at the workspace folder you created. 
-```
 cd ..
-catkin build
-```
-One dot `.` means "this folder", and two dots `..` means "previous folder". The command in the first line therefore means that you are moving 1 layer of folders back relative to your current directory.
-
-To read more on catkin workspaces http://wiki.ros.org/catkin/workspaces.
-
-
-If the command `catkin build` throws errors, but you're able to source ROS using `source /opt/ros/noetic/setup.bash`, install additional packages using: 
-```
-sudo apt install python3-catkin-tools python3-osrf-pycommon
-```
-Command `catkin build` should be working now.
-
-
-### Task 1.2 Sourcing ros and running roscore
-
-Pick an empty terminal and begin by sourcing ros. This will allow us to use ros commands in terminal.
-
-Sourcing ros:
-
-```
-source /opt/ros/noetic/setup.bash
 ```
 
-Then run a roscore:
+Build the workspace:
 
-
-```
-roscore
-```
-
-The roscore manages communications between nodes, and every node registers at startup with the master. You will not be able to run nodes unless a roscore is running.
-
-### Task 1.3 Sourcing the workspace and ROS
-Once the repository has been built, we need to source both ROS and the workspace.
-
-Sourcing ros:
-
-```
-source /opt/ros/noetic/setup.bash
+```bash
+colcon build
 ```
 
-To source the workspace you need to be located in your workspace folder.
+Source the workspace:
 
+```bash
+source install/setup.bash
 ```
-source devel/setup.bash
+
+Setting up `colcon` argcomplete is recommended to achieve inner peace 🙏:
+
+```bash
+sudo apt update
+sudo apt install python3-colcon-common-extensions
 ```
 
-### Task 1.4 Running a node
+Next, you need to "source" the autocomplete script in your shell's configuration file. This will ensure that the autocomplete functionality is loaded every time you open a new terminal.
 
-It is now possible to use the command "rosrun" to run nodes. The arguments for rosrun are the package name and the nodename.
+If you are using the Bash shell (the default for Ubuntu), add a line to your `.bashrc` file. Run the following command in your terminal:
 
+```bash
+echo "source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash" >> ~/.bashrc
 ```
-rosrun [package_name] [nodename]
+
+For `zsh` users, replace `~/.bashrc` with `~/.zshrc`.
+
+### **Task 1.2: Running a node**
+
+Use the `ros2 run` command with the following syntax:
+
+```bash
+ros2 run [package_name] [executable_name]
 ```
 
 Example:
 
-```
-rosrun talker_cpp talker_cpp_node 
-```
-
-The command above will run the talker_cpp_node which is located in the catkin package named talker_cpp.
-
-
-### Task 1.5 Listening to the node 
-
-Source ros in your last empty terminal:
-
-```
-source /opt/ros/noetic/setup.bash
+```bash
+ros2 run talker talker_node
 ```
 
-Then run the command: 
+### **Task 1.3: Listening to a topic**
 
-```
-rostopic list
+First, list the available topics to see what you can listen to:
+
+```bash
+ros2 topic list
 ```
 
-This command will output all the different topics you can listen to.
+Then, listen to a specific topic using the `echo` command:
 
-```
-$ rostopic list
-/pose_cpp
-/rosout
-/rosout_agg
-/seq_cpp
-```
-Underneath the "rostopic list" command, you can see the different topics being published, each beginning with "/".
-
-Next we want to listen to the topic being published from the node by using the rostopic echo command.
-
-```
-rostopic echo [topic name]
+```bash
+ros2 topic echo [topic_name]
 ```
 
 Example:
-```
-rostopic echo /pose_cpp
-```
 
-Your output should look like this: 
-
-```
----
-position: 
-  x: 5.0
-  y: 1.0
-  z: 0.0
-orientation: 
-  x: 0.0
-  y: 0.0
-  z: 0.0
-  w: 1.0
----
+```bash
+ros2 topic echo /talker_cpp
 ```
 
+-----
 
-### Task 2: Create a package containing a publisher (C++ or Python)
-By the end of task 2 you will be able to make catkin packages, be familiar with what a branch is and the commands: git add, git commit and git push.
+## Task 2: Create a package containing a C++ publisher
 
-You can either look around in the training repo or head over to ROS-tutorials http://wiki.ros.org/ROS/Tutorials if you need inspiration on how to write a publisher in either C++ or Python. In order to validate that your package works you can try to listen to the node you made. A nice tip is to use the code for a publisher in the ros wiki, and use that to see if you can get the node to run. 
+You will learn to create packages and use git for version control.
 
-Task 2 will mainly walk you through the version control tool git and the "janitor work" that needs to be done in order for your node to be able to run in your newly made catkin package.
+### **Task 2.1: Making a branch and a ROS 2 package**
 
+Branch out from main to keep your work organized:
 
-### Task 2 preliminaries for git
-
-At Vortex NTNU we organize our code in repositories, and use a tool called git for version control. Each repository contains the codebase for a specific system. These repositories are stored at Github, and each of these repositories has different versions.
-
-These versions are what we call branches, so a branch is in fact just a version of the codebase. Each repository has a version where the code runs smoothly and is able to build. This is called the master branch. 
-
-When we want to add a different feature to our codebase, we clone the remote codebase to our computer. Once the codebase is stored locally on our computer we want to let git know that we are working on a new version of the codebase (new branch). When you make a new branch you always branch out from either the working version of the codebase (master branch), or an experimental version of the codebase (other branch). 
-
-Once we have implemented our new feature in our new branch we want to merge our branch with the master branch. To do this you have to make a pull request. This is when the changes added by your branch will be read through by one or more software leads, and either approved or declined for mergening with the master branch. In this tutorial we want you to push your branch to the repository, but we don't want you to open a pull request.
-
-The benefit of using git is that it is possible to revert any changes made to the codebase, and it allows for easier cooperation when working on the same codebase. 
-
-A nice git tutorial can be found at: https://www.youtube.com/playlist?list=PL4cUxeGkcC9goXbgTDQ0n_4TBzOO0ocPR.
-
-
-### Task 2.1 Making a branch and a catkin package
-
-Branch out of the master branch by using the command:
-
-```
+```bash
 git checkout -b "yourName/Task_2"
 ```
 
-Once you are on your branch you can navigate to the your_code directory. Then use the "catkin_create_pkg" command:
+Create a C++ package using the `ament_cmake` build type:
 
-```
-catkin_create_pkg [package name] [dependency 1] [dependency 2] [dependency n]
-```
-
-Example:
-
-```
-catkin_create_pkg myPackage std_msgs rospy roscpp
-```
-The command above will make a package called myPackage which is dependent on std_msgs rospy and roscpp. "std_msgs" is a package containing all the standard messages for ros. You need the rospy package if you want to write a node in Python, and roscpp if you want to make a node in c++.  It will also generate a new folder called myPackage. This folder will contain an empty src folder, a CMakeLists.txt and a package.xml file. 
-
-Info on the contents of the package.xml file can be found here: http://wiki.ros.org/catkin/package.xml.
-
-Info on the content of a CMakeLists.txt can be found here: http://wiki.ros.org/catkin/CMakeLists.txt.
-
-
-### Task 2.2 Writing a publisher (Python)
-
-Once your package has been created you should rename your src folder to scripts and create a new python file inside your new scripts folder. It is important to add the shebang "#!/usr/bin/env python3" at the top of you python file. This is used to tell the kernel (linux core) which interpreter should be used to run the commands present in the file. Once the shebang is added you can write your script, but you will need to make it an executable before being able to use either python3 or rosrun to execute your python file. This can be done by using the "chmod +x" command.
-
-```
-chmod +x [filename]
+```bash
+ros2 pkg create --build-type ament_cmake my_package --dependencies rclcpp std_msgs
 ```
 
-Example:
+### **Task 2.2: Writing a C++ publisher**
 
-```
-chmod +x myPythonNode.py
-```
+Add your C++ source file (e.g., `my_publisher.cpp`) to the `my_package/src/` directory.
 
-Now you can try to run the python node with rosrun! An example:
-```
-rosrun myPackage myPythonNode.py
-```
-To check that your node is publishing data, use the following command in a separate terminal window (remember to source ros):
-```
-rostopic echo /your_topic_name_here
-```
-If your node is publishing data, there should be printouts from your program appearing in the terminal window.
+Next, you must update `CMakeLists.txt` to build your code. Add the following lines to `CMakeLists.txt` to define your executable and link it to its dependencies:
 
-### Task 2.2 Writing a publisher (C++)
+```cmake
+add_executable(my_publisher_node src/my_publisher.cpp)
 
-If you created your package and listed roscpp as a dependency, then an include folder was also created. Inside this folder there is another folder with the same name as your package. Here you can create you header file. In order to link your header file to your .cpp file (which should be located in the src folder) and make your .cpp file an executable you need to make some changes to CMakeLists.txt.
+# Link the executable to its dependencies.
+# You must list every package that you #include headers from.
+ament_target_dependencies(my_publisher_node
+  rclcpp
+  std_msgs
+)
 
-There are several lines you need to uncomment in CMakeLists.txt:
-
-1. You want to head over to approximatly line 105 and uncomment "INCLUDE_DIRS include"
-
-2. In include_directories you want to uncomment "include".
-
-3. You want to declare your .cpp file as an executable, so head to  approximatly line 135 and uncomment "add_executable(${PROJECT_NAME}_node src/publisher_cpp.cpp". After "src/" it is important that you write the filename of the .cpp file you want to make an executable.
-
-4. You want to uncomment "add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})"
-
-5. Lastly you have to head to approximatly line 148 and uncomment " target_link_libraries(${PROJECT_NAME}_node
-   ${catkin_LIBRARIES}
- )".
-
-Now you need to head over to your workspace folder and use catkin build, and source your workspace.
-
-Now you can try to run the node with rosrun! An example:
-```
-rosrun myPackage myPackageNode
-```
-To check that your node is publishing data, use the following command in a separate terminal window (remember to source ros):
-```
-rostopic echo /your_topic_name_here
-```
-If your node is publishing data, there should be printouts from your program appearing in the terminal window.
-
-*If you would like more explanations as for how CMakeLists.txt works, you can snoop around in the CMakeLists.txt in the talker_cpp package located in tutorial packages.*
-
-###  Task 2.2 Using git
-When you have created your files you can first "stage" them by using the command "git add", this makes it possible to commit the changes later.
-
-```
-git add /filename
+# Install the executable so it can be run with `ros2 run`
+install(TARGETS
+  my_publisher_node
+  DESTINATION lib/${PROJECT_NAME}
+)
 ```
 
-Once all your files have been staged you can commit them by using the command "git commit"
+Learning CMake takes practice. A great way to start is by examining the CMakeLists.txt files in the `talker` and `listener` packages. Focus on understanding the essential commands that appear in most projects, as these are the fundamentals you'll use regularly.
 
+Now, build your workspace from the root (`~/ros2_ws`):
+
+```bash
+colcon build
+source install/setup.bash
 ```
-git commit -m "A commit message."
+
+Run your new node:
+
+```bash
+ros2 run my_package my_publisher
 ```
 
-Making a commit is similar to making a savepoint, as you can revert commits. A commit always comes along with a commit message. This message should be as precise as possible in regards to exactly what changes you have done.
+In a separate terminal, check the data being published:
 
-Every time changes are made to a file it needs to be staged again in order for it to be included in a commit. You can stage and commit as many times as you like. You will only publish your local branch to the remote repository once you use the "git push" command.
-
+```bash
+ros2 topic echo /your_topic_name_here
 ```
+
+### **Task 2.3: Using git**
+
+Stage and commit your changes to save your progress:
+
+```bash
+git add <filename>
+git commit -m "A descriptive commit message."
 git push
 ```
 
-### Task 3: Create a package containing a subscriber (C++ or Python)
+-----
 
-Make a package containing a subscriber that will subscribe to the topic that is being published from your earlier package. If you already wrote your publisher in Python you could write your subscriber in C++.
+## Task 3: Create a package containing a C++ subscriber
 
-### Task 3.1
+Create a new package and a C++ node that subscribes to the topic you published to earlier. Follow the same steps as in Task 2 for creating a package and adding an executable to `CMakeLists.txt`.
 
-Make a launch file to launch both your nodes at once. 
+### **Task 3.1: Creating a launch file**
 
-If you need inspiration for how to make a launch file, it is reccomended that you inspect the launch files in the repo.
+Review the example setup in the `simple_publisher` package to see how launch files can be used to launch multiple nodes.
 
-Once you have made your launchfile (which is typically located in a package) you can launch it by using the "roslaunch command".
+A launch file allows you to run multiple nodes with a single command. Create a `launch/` directory inside your package (`my_package/launch/`). Inside, create a launch file (e.g., `my_launch_file.launch.py`). The launch file can be placed in either package and launch nodes from both packages.
 
+Run both your newly created nodes using the launch file:
+
+```bash
+ros2 launch my_package my_launch_file.launch.py
 ```
-roslaunch [package_name] [launchfile_name]
-```
+Also try creating a config file that is used by your launch file.
 
-Example:
+-----
 
-```
-roslaunch tutorial_setup system_launchfile.launch
-```
-This command will launch the premande nodes in the training repo.
-### Neat commands
+### Neat Commands
 
-You are often able to autocomplete commands by using tab while writing them. If the command does not autocomplete it usally means that something is not sourced properly, or that you have a typo in your command.
+Use the **Tab** key to autocomplete commands. If autocomplete fails, check that you have sourced your workspace (`source install/setup.bash`) or look for typos.
 
-You can change directories by using the "cd" command.
-
-```
-cd [example_folder]
-```
-
-Example:
-
-```
-cd Downloads
-```
-
-You can also use cd to go out of a directory.
-
-Example:
-
-```
-cd ..
-```
-
-
-You can print what subdirectories is inside your current directory by using the "ls" command.
-
-```
-ls
-```
-
-
-You can use the "cat" command in order to print a files content to terminal. The command below will print the contents of examplefile.py to the terminal.
-
-```
-cat examplefile.py
-```
-
-
-
-
-You can create a new file by using the "touch" command. The command below will create a new python file in your current directory called examplefile.py.
-
-```
-touch examplefile.py
-```
-
-
-You can use the "nano" command to do text editiong from terminal. If nano is not installed type:  
-
-```
-sudo apt-get install nano
-```
-
-In order to do text editiing in a pythonfile:
-
-```
-nano examplefile.py
-```
-
-If you want to exit nano then you can use (ctrl + x) 
-You will the be prompted if you wold like to save your changes. You can decide weather to save or dicard by typing (N) or (Y).
-
-
-If you want to make something executable you can use the "chmod +x" command.
-
-```
-chmod +x myfile.py
-```
-
-If you want to listen to a topic in terminal you can use the "rostopic echo" command.
-
-```
-rostopic echo /topic
-```
-
-If you want to publish to a topic in terminal you can use the "rostopic pub" command.
-
-If you have been messing around in CMakeLists.txt then it is important to use the "catkin clean" command. You need to use this command in you workspace folder, and then build your repo again.
-
-```
-catkin clean
-```
+| Command                                                    | Description                                            |
+| ---------------------------------------------------------- | ------------------------------------------------------ |
+| `cd [folder]`                                              | Change to a different directory.                       |
+| `cd ..`                                                    | Go up one directory level.                             |
+| `ls`                                                       | List the contents of the current directory.            |
+| `cat [filename]`                                           | Print the contents of a file to the terminal.          |
+| `touch [filename]`                                         | Create a new, empty file.                              |
+| `nano [filename]`                                          | Edit a file in the terminal using the nano editor. (ctrl + X) to exit.     |
+| `ros2 topic echo /topic_name`                              | Listen to messages on a specific topic.                |
+| `ros2 topic pub /topic std_msgs/msg/String "data: 'Hello'"` | Publish a one-time message to a topic from the CLI.    |
+| `colcon clean`                                             | Remove build artifacts to prepare for a clean build.   |
+| `colcon build`                                             | Build all packages in the workspace.                   |

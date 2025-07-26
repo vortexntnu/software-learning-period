@@ -1,0 +1,4 @@
+/**: # Name of the node usually goes here. We use wildcard so that we can change the name from the launch file.
+  ros__parameters:
+    publish_topic: "my_custom_topic"  # parameter name: parameter value
+    publish_value: "Hello from config!"  # parameter name: parameter value
