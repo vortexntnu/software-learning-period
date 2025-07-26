@@ -83,8 +83,8 @@ sudo ./run.sh
 
 #### macOS
 ```bash
-chmod +x build.sh
-./build.sh
+chmod +x run.sh
+./run.sh
 ```
 
 **What this does**:
