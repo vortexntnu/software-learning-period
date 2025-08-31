@@ -74,7 +74,10 @@ To overlay boxes correctly, we must transform them back.
 ---
 
 ## Visual comparison
-_Insert a side-by-side image of a letterboxed vs. non-letterboxed frame here._
+
+| Original frame | Letterboxed (640×640) |
+|----------------|------------------------|
+| <img src="./img/original_image.png" width="400"/> | <img src="./img/letterboxed_image.png" width="400"/> |
 
 ---
 
