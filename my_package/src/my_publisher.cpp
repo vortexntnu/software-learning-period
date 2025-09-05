@@ -1,5 +1,4 @@
 #include <chrono>
-#include <memory>
 #include <rclcpp/rclcpp.hpp>
 #include <std_msgs/msg/string.hpp>
 
@@ -9,19 +8,23 @@ int main(int argc, char * argv[])
 {
   rclcpp::init(argc, argv);
 
-  // Make a node
+  // Create the node
   auto node = rclcpp::Node::make_shared("my_publisher_node");
 
-  // Create a timer: every 1 second call this lambda
+  // Create a publisher on topic "chatter"
+  auto publisher = node->create_publisher<std_msgs::msg::String>("chatter", 10);
+
+  // Create a timer that publishes "alive" every second
   auto timer = node->create_wall_timer(
     1s,
-    [node]() {
-      RCLCPP_INFO(node->get_logger(), "alive");
+    [publisher]() {
+      auto msg = std_msgs::msg::String();
+      msg.data = "alive";
+      publisher->publish(msg);
     });
 
-  // Spin keeps the node running so the timer can fire
+  // Spin the node so the timer runs
   rclcpp::spin(node);
-
   rclcpp::shutdown();
   return 0;
 }

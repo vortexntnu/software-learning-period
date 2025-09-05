@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(my_package)
+project(my_subscriber)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
@@ -21,27 +21,12 @@ if(BUILD_TESTING)
   set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
 endif()
+add_executable(my_subscriber_node src/my_subscriber.cpp)
+ament_target_dependencies(my_subscriber_node rclcpp std_msgs)
 
-add_executable(my_publisher_node src/my_publisher.cpp)
-
-# Link the executable to its dependencies.
-# You must list every package that you #include headers from.
-ament_target_dependencies(my_publisher_node
-  rclcpp
-  std_msgs
-)
-
-# Install the executable so it can be run with `ros2 run`
 install(TARGETS
-  my_publisher_node
-  DESTINATION lib/${PROJECT_NAME}
-)
-
-install(DIRECTORY launch
-  DESTINATION share/${PROJECT_NAME}
-)
+  my_subscriber_node
+  DESTINATION lib/${PROJECT_NAME})
 
 
 ament_package()
-
-
