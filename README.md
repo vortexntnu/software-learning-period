@@ -76,6 +76,17 @@ Build the workspace:
 colcon build
 ```
 
+Source the ros2 installation:
+
+```bash
+source /opt/ros/humble/setup.bash
+```
+Add the command to your shell startup script
+```bash
+echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
+```
+For `zsh` users, replace `~/.bashrc` with `~/.zshrc`.
+
 Source the workspace:
 
 ```bash
