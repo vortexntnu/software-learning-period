@@ -17,7 +17,7 @@ The rosbag that goes along with this example contains the relevant ros2 topic ne
 The `vision-msgs` package required for the `Detection2DArray` (bounding boxes) is not part of the base ROS 2 installation and therefore has to be installed manually:
 
 ```bash
-sudo apt install ros-<ros2_distro>-vision-msgs
+sudo apt install ros-humble-vision-msgs
 ```
 
 Once everything is set up we are ready to start the tutorial.
