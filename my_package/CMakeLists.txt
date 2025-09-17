@@ -24,6 +24,12 @@ target_include_directories(my_publisher_node PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 
+# Install launch files
+install(
+  DIRECTORY launch/
+  DESTINATION share/${PROJECT_NAME}/launch
+)
+
 # Link dependencies
 ament_target_dependencies(my_publisher_node
   rclcpp

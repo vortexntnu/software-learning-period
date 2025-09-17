@@ -12,22 +12,22 @@ find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 
 # Executable
-add_executable(subscriber_node src/my_subscriber.cpp)
+add_executable(my_subscriber_node src/my_subscriber.cpp)
 
 # Include dirs
-target_include_directories(subscriber_node PUBLIC
+target_include_directories(my_subscriber_node PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>
 )
 
 # Dependencies
-ament_target_dependencies(subscriber_node
+ament_target_dependencies(my_subscriber_node
   rclcpp
   std_msgs
 )
 
 # Install the executable
-install(TARGETS subscriber_node
+install(TARGETS my_subscriber_node
   DESTINATION lib/${PROJECT_NAME}
 )
 
