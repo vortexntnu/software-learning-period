@@ -52,8 +52,6 @@ install(TARGETS object_detection_example_node
 
 install(
     DIRECTORY
-    launch
-    config
     DESTINATION share/${PROJECT_NAME}
 )
 
