@@ -50,7 +50,7 @@ The bridge is now installed and ready to use.
 Now you can run the bridge and connect Foxglove Studio to it.
 
 ```bash
-ros2 launch foxglove_bridge foxglove_bridge_launch.py
+ros2 launch foxglove_bridge foxglove_bridge_launch.xml
 ```
 
 You should see output indicating that the server is listening on a specific port (the default is `8765`).
