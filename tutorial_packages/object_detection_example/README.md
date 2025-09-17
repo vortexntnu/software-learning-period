@@ -98,7 +98,7 @@ To overlay boxes correctly, we must transform them back.
    - You now have the box in the original camera image coordinates.
 
 4. **Publish corrected results**  
-   - Use the provided functions in `src/bounding_box_utils.cpp` to handle these transforms.  
+   - Use the provided functions in `src/utils.cpp` to handle these transforms.  
    - Then redraw and republish the adjusted bounding boxes.
 
 ---
@@ -107,7 +107,7 @@ To overlay boxes correctly, we must transform them back.
 
 - Subscribe to `/camera/color/image_raw` (or similar) and `/camera/color/camera_info`.  
 - Store `height` and `width` from the camera info in member variables.  
-- Apply the transform using the helper functions in `bounding_box_utils.cpp`.  
+- Apply the transform using the helper functions in `utils.cpp`.  
 
 ---
 
