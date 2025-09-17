@@ -46,7 +46,7 @@ void ObjectDetectionExampleNode::color_image_info_callback(
     const sensor_msgs::msg::CameraInfo::SharedPtr camera_info_msg) {
     if (!color_image_info_received_) {
 
-        // Store the relevent fields of the camera_info_msg in persistent member variables here.
+        // Store the relevant fields of the camera_info_msg in persistent member variables here.
         // Remember to declare the other member variables used in this function in the header file.
 
         color_image_frame_id_ = camera_info_msg->header.frame_id;
