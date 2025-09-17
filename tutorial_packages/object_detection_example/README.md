@@ -49,7 +49,7 @@ whose relevant fields (pixel coordinates, stored as floats for sub-pixel precisi
 
 This is enough information to draw rectangles on the color image.
 
-We’ve provided a helper function `draw_bounding_boxes` in `src/bounding_box_utils.cpp`.
+We’ve provided a helper function `draw_bounding_boxes` in `src/utils.cpp`.
 Check `include/types.hpp` for helper structs. It’s good practice to convert ROS types to
 non-ROS types before processing.
 
