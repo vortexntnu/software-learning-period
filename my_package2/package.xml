@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package format="3">
-  <name>my_package</name>
+  <name>my_package2</name>
   <version>0.0.1</version>
   <description>ROS 2 subscriber example</description>
 

@@ -23,9 +23,10 @@ void MyPublisher::timer_callback()
 {
     i = i + 1;
     auto message = std_msgs::msg::String();
-    message.data = publish_value_;
+    message.data = publish_value_ + " " + std::to_string(i);
     publisher_->publish(message);
-    RCLCPP_INFO(this->get_logger(), "Publishing: '%s' '%d'", message.data.c_str(), i);
+
+    RCLCPP_INFO(this->get_logger(), "Publishing: '%s'", message.data.c_str());
 }
 
 int main(int argc, char * argv[])
