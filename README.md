@@ -70,12 +70,6 @@ git clone https://github.com/vortexntnu/software-learning-period.git
 cd ..
 ```
 
-Build the workspace:
-
-```bash
-colcon build
-```
-
 Source the ros2 installation:
 
 ```bash
@@ -86,6 +80,19 @@ Add the command to your shell startup script
 echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
 ```
 For `zsh` users, replace `~/.bashrc` with `~/.zshrc`.
+
+Download dependencies for this repo:
+```bash
+sudo apt install ros-humble-vision-msgs
+```
+
+
+Build the workspace:
+
+```bash
+colcon build
+```
+
 
 Source the workspace:
 
