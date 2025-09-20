@@ -33,13 +33,12 @@ void ObjectDetectionExampleNode::setup_sync() {
 }
 
 void ObjectDetectionExampleNode::synchronized_callback(
-    const sensor_msgs::msg::Image::ConstSharedPtr& depth_image,
-    const sensor_msgs::msg::Image::ConstSharedPtr& color_image,
-    const vision_msgs::msg::Detection2DArray::ConstSharedPtr& detections) {
+    const sensor_msgs::msg::Image::ConstSharedPtr& /*depth_image*/,
+    const sensor_msgs::msg::Image::ConstSharedPtr& /*color_image*/,
+    const vision_msgs::msg::Detection2DArray::ConstSharedPtr& /*detections*/) {
     if (!color_image_info_received_) {
-        return; // We need the camera info to process the images, so we return if we haven't received it yet.
+        return;
     }
-
 }
 
 void ObjectDetectionExampleNode::color_image_info_callback(
