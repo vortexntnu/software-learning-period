@@ -14,7 +14,7 @@ export BASE_IMAGE="ros:humble"                      # Base image for Docker buil
 
 ARCHITECTURE="$(uname -m)"
 if [[ "$ARCHITECTURE" == "arm64" || "$ARCHITECTURE" == "aarch64" ]]; then
-    PLATFORM="arm64"
+    PLATFORM="linux/arm64"
 elif [[ "$ARCHITECTURE" == "x86_64" ]]; then
     PLATFORM="amd64"
 else
@@ -34,7 +34,8 @@ fi
 # ------------------------------------------------------------------------------
 
 SCRIPT_DIR="$(dirname "$(realpath "$0")")"
-WORKSPACE="$(realpath "$SCRIPT_DIR/../../..")"  # A bit cursed, but should work
+# Use the parent of the docker folder as the workspace root
+WORKSPACE="$(realpath "$SCRIPT_DIR/..")"
 
 # ------------------------------------------------------------------------------
 # Build Start Info
@@ -56,6 +57,8 @@ echo ""
 docker buildx build \
     --platform "$PLATFORM" \
     --build-arg BASE_IMAGE="$BASE_IMAGE" \
+    --build-arg USER_ID="$(id -u)" \
+    --build-arg GROUP_ID="$(id -g)" \
     --tag "$IMAGE" \
     --file "$SCRIPT_DIR/Dockerfile" \
     --load \

@@ -29,7 +29,11 @@ fi
 # ------------------------------------------------------------------------------
 
 SCRIPT_DIR="$(dirname "$(realpath "$0")")"
-WORKSPACE="$(realpath "$SCRIPT_DIR/../../..")" # A bit cursed, but should work
+# Use the parent of the docker folder as the workspace root
+WORKSPACE="$(realpath "$SCRIPT_DIR/..")"
+
+# Optional mount directory inside the container
+#MOUNT_DIR="$WORKSPACE/container_mount"
 
 # ------------------------------------------------------------------------------
 # Run Information
@@ -39,7 +43,8 @@ echo "======================================================================"
 echo " Running Container"
 echo "   • IMAGE:          $IMAGE"
 echo "   • PLATFORM:       $PLATFORM"
-echo "   • MOUNT:          $WORKSPACE  →  /ros2_ws"
+#echo "   • MOUNT (optional): $MOUNT_DIR  →  /host_files"
+echo "   • Note: workspace root is $WORKSPACE"
 echo "======================================================================"
 echo ""
 
@@ -48,11 +53,11 @@ echo ""
 # ------------------------------------------------------------------------------
 
 docker run -it --rm \
-    --user "$(id -u):$(id -g)" \
-    --privileged \
-    --network host \
-    --ipc=host \
-    -v "$WORKSPACE":/ros2_ws \
-    -w /ros2_ws \
-    "$IMAGE" \
-    /bin/bash
+        --user "$(id -u):$(id -g)" \
+        --privileged \
+        --network host \
+        --ipc=host \
+        -v "$WORKSPACE":/ros2_ws \
+        -w /ros2_ws \
+        "$IMAGE" \
+        /bin/bash
