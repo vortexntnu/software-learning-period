@@ -1,0 +1,29 @@
+# Ignore build artifacts and large/runtime folders
+build/
+install/
+log/
+*.log
+
+# Docker and local config
+docker/
+.dockerignore
+
+# VCS
+.git
+.gitignore
+
+# VS Code
+.vscode/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+venv/
+.env
+
+# Misc
+*.swp
+*.swo
+node_modules/
