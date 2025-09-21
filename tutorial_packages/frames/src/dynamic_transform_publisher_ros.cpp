@@ -27,11 +27,15 @@ void DynamicTransformPublisher::timer_callback()
     transform.header.stamp = this->get_clock()->now();
 
     // TODO: populate the transform.header.frame_id and transform.child_frame_id according to spec
-
+    transform.header.frame_id = "odom";
+    transform.child_frame_id = "base_link";
     // TODO: populate the transform.transform.translation. fields (x, y, z)
-
+    transform.transform.translation.x = std::cos(theta);
+    transform.transform.translation.y = std::sin(theta);
+    transform.transform.translation.z = 0;
     // TODO: construct a quaternion object and set the rotation values of the quaternion
-
+    tf2::Quaternion q;
+    q.setRPY(0, 0, theta);
     // TODO: populate the transform.transform.rotation fields (x, y, z, w) with the quaternion from last step
 
     // TODO: publish transform
