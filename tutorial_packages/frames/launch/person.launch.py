@@ -31,7 +31,7 @@ def generate_launch_description():
         name='base_to_person_enu',
         arguments=['--x', '2.0', '--y', '0', '--z', '0',
                    '--yaw', str(math.pi/2), '--pitch', '0', '--roll', str(math.pi),
-                   '--frame-id', 'base_link', '--child-frame-id', 'person_enu_link']
+                   '--frame-id', 'odom', '--child-frame-id', 'person_enu_link']
     )
   
 

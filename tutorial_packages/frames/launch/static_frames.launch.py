@@ -1,5 +1,6 @@
 from launch import LaunchDescription
 from launch_ros.actions import Node
+import numpy as np
 
 def generate_launch_description():
     return LaunchDescription([
@@ -8,8 +9,8 @@ def generate_launch_description():
             package='tf2_ros',
             executable='static_transform_publisher',
             name='base_link_to_camera',
-            arguments=['--x', '0', '--y', '0', '--z', '0',
-                       '--yaw', '0', '--pitch', '0', '--roll', '0',
+            arguments=['--x', '0', '--y', '0.2', '--z', '0.7',
+                       '--yaw', str(np.pi/2), '--pitch', '0', '--roll', str(np.pi/2),
                        '--frame-id', 'base_link', '--child-frame-id', 'camera'],
         ),
 
