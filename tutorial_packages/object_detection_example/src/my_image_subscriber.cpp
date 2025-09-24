@@ -24,8 +24,7 @@ MySubscriber::MySubscriber() : Node("my_image_subscriber") {
     auto qos = rclcpp::QoS(rclcpp::KeepLast(10)).best_effort().durability_volatile();
 
     image_pub_ = this->create_publisher<sensor_msgs::msg::Image>("/image_with_boxes", rclcpp::QoS(10));
-    pointcloud_pub_ = this->create_publisher<sensor_msgs::msg::PointCloud2>("/points_in_boxes", rclcpp::QoS(10));
-
+    
     image_sub_ = this->create_subscription<sensor_msgs::msg::Image>(
         "/zed_node/left/image_rect_color", qos,
         std::bind(&MySubscriber::image_callback, this, std::placeholders::_1));
@@ -40,7 +39,10 @@ MySubscriber::MySubscriber() : Node("my_image_subscriber") {
     detection_sub_ = this->create_subscription<vision_msgs::msg::Detection2DArray>(
         "/detections_output", qos,
         std::bind(&MySubscriber::detection_callback, this, std::placeholders::_1));
+
+    pointcloud_pub_ = this->create_publisher<sensor_msgs::msg::PointCloud2>("/points_in_boxes", rclcpp::QoS(10));
     }
+
 
 
 void MySubscriber::image_callback(const ImageMsg::SharedPtr msg) {
@@ -101,18 +103,17 @@ void MySubscriber::process_and_publish() {
     // Transform all detections using utils.cpp
     std::vector<BoundingBox> transformed_boxes;
     for (const auto& det : last_detections_->detections) {
-        if (det.bbox.size_x > 0 && det.bbox.size_y > 0) {
-            BoundingBox box{
-                det.bbox.center.position.x,
-                det.bbox.center.position.y,
-                det.bbox.size_x,
-                det.bbox.size_y
-            };
-            transformed_boxes.push_back(transform_bounding_box(box, letterbox_props));
-        }
+        BoundingBox box{
+            det.bbox.center.position.x,
+            det.bbox.center.position.y,
+            det.bbox.size_x,
+            det.bbox.size_y
+        };
+
+        transformed_boxes.push_back(transform_bounding_box(box, letterbox_props));
     }
 
-    // --- Point cloud extraction from bounding boxes ---
+    // Point cloud extraction from bounding boxes
     pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>());
     for (const auto& box : transformed_boxes) {
         int left   = std::max(0, static_cast<int>(box.center_x - box.size_x / 2.0));
