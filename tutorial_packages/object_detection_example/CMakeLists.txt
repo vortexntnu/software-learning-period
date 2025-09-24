@@ -21,10 +21,27 @@ find_package(pcl_conversions REQUIRED)
 
 include_directories(include)
 
+add_library(object_detection_example_utils src/utils.cpp)
+
+target_include_directories(object_detection_example_utils PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  ${OpenCV_INCLUDE_DIRS}
+  ${PCL_INCLUDE_DIRS}
+)
+
+target_link_libraries(object_detection_example_utils PUBLIC
+  ${OpenCV_LIBS}
+  ${PCL_LIBRARIES}
+)
+
 add_executable(object_detection_example_node
-src/object_detection_example_ros.cpp src/utils.cpp)
+src/object_detection_example_ros.cpp)
+
+add_executable(image_republisher_node
+  src/image_republisher_node.cpp)
 
 target_link_libraries(object_detection_example_node PUBLIC
+  object_detection_example_utils
   ${OpenCV_LIBS}
   ${PCL_LIBRARIES}
 )
@@ -46,7 +63,30 @@ ament_target_dependencies(object_detection_example_node PUBLIC
   pcl_conversions
 )
 
+ament_target_dependencies(image_republisher_node PUBLIC
+  rclcpp
+  cv_bridge
+  sensor_msgs
+  vision_msgs
+)
+
+target_link_libraries(image_republisher_node PUBLIC
+  object_detection_example_utils
+  ${OpenCV_LIBS}
+  ${PCL_LIBRARIES}
+)
+
+target_include_directories(image_republisher_node PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>
+  ${OpenCV_INCLUDE_DIRS}
+)
+
 install(TARGETS object_detection_example_node
+  DESTINATION lib/${PROJECT_NAME}
+)
+
+install(TARGETS image_republisher_node
   DESTINATION lib/${PROJECT_NAME}
 )
 
