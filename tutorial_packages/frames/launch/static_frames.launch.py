@@ -9,7 +9,7 @@ def generate_launch_description():
             package='tf2_ros',
             executable='static_transform_publisher',
             name='base_link_to_camera',
-            arguments=['--x', '0', '--y', '0.2', '--z', '0.7',
+            arguments=['--x', '0.7', '--y', '0', '--z', '-0.2',
                        '--yaw', str(np.pi/2), '--pitch', '0', '--roll', str(np.pi/2),
                        '--frame-id', 'base_link', '--child-frame-id', 'camera'],
         ),
