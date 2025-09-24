@@ -4,6 +4,17 @@
 
 ARG BASE_IMAGE=ros:humble
 FROM ${BASE_IMAGE}
+RUN apt-get update && apt-get install -y \
+    ros-humble-demo-nodes-cpp \
+    ros-humble-foxglove-bridge \
+    ros-humble-tf2-ros \
+    ros-humble-xacro \
+    ros-humble-vision-msgs \
+    ros-humble-cv-bridge \
+    ros-humble-pcl-conversions \
+    libopencv-dev \
+    libpcl-dev \
+    python3-colcon-common-extensions
 
 # ------------------------------------------------------------------------------
 # Runtime Configuration
@@ -33,6 +44,9 @@ ENV HOME=/home/devuser
 
 ENV WORKSPACE=/ros2_ws
 WORKDIR ${WORKSPACE}
+
+RUN echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
+RUN echo "source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash" >> ~/.bashrc
 
 # ------------------------------------------------------------------------------
 # Copy Workspace Files
