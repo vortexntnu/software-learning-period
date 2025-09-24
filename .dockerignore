@@ -27,3 +27,4 @@ venv/
 *.swp
 *.swo
 node_modules/
+bags/
