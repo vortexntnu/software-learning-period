@@ -265,6 +265,13 @@ ros2 topic echo /my_topic
 ```
 
 ### **Task 2.3: Using git**
+Make sure you have the correct repository open in Bash `~/ros2_ws/src/software-learning-period`
+
+Once you are here, always check the status by running:
+
+```bash
+git status
+```
 
 Stage and commit your changes to save your progress:
 
