@@ -261,7 +261,7 @@ ros2 run my_package my_publisher_node
 In a separate terminal, check the data being published:
 
 ```bash
-ros2 topic echo /your_topic_name_here
+ros2 topic echo /my_topic
 ```
 
 ### **Task 2.3: Using git**
