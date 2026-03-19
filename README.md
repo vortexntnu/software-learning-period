@@ -173,7 +173,49 @@ ros2 pkg create --build-type ament_cmake my_package --dependencies rclcpp std_ms
 
 ### **Task 2.2: Writing a C++ publisher**
 
-Add your C++ source file (e.g., `my_publisher.cpp`) to the `my_package/src/` directory.
+Add your C++ source file (e.g., `my_publisher.cpp`) to the `my_package/src/` directory. Here is example code:
+
+```bash
+#include <chrono>
+#include <memory>
+
+#include "rclcpp/rclcpp.hpp"
+#include "std_msgs/msg/string.hpp"
+
+using namespace std::chrono_literals;
+
+class MyPublisher : public rclcpp::Node {
+public:
+    MyPublisher() : Node("my_publisher"), count_(0) {
+        publisher_ = this->create_publisher<std_msgs::msg::String>("my_topic", 10);
+
+        timer_ = this->create_wall_timer(
+            500ms, std::bind(&MyPublisher::timer_callback, this));
+
+        RCLCPP_INFO(this->get_logger(), "Publisher node started!");
+    }
+
+private:
+    void timer_callback() {
+        auto message = std_msgs::msg::String();
+        message.data = "Hello, ROS 2! Count: " + std::to_string(count_++);
+
+        RCLCPP_INFO(this->get_logger(), "Publishing: '%s'", message.data.c_str());
+        publisher_->publish(message);
+    }
+
+    rclcpp::Publisher<std_msgs::msg::String>::SharedPtr publisher_;
+    rclcpp::TimerBase::SharedPtr timer_;
+    size_t count_;
+};
+
+int main(int argc, char *argv[]) {
+    rclcpp::init(argc, argv);
+    rclcpp::spin(std::make_shared<MyPublisher>());
+    rclcpp::shutdown();
+    return 0;
+}
+```
 
 Next, you must update `CMakeLists.txt` to build your code. Add the following lines to `CMakeLists.txt` to define your executable and link it to its dependencies:
 
