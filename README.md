@@ -255,7 +255,7 @@ source install/setup.bash
 Run your new node:
 
 ```bash
-ros2 run my_package my_publisher
+ros2 run my_package my_publisher_node
 ```
 
 In a separate terminal, check the data being published:
