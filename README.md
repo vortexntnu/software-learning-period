@@ -238,7 +238,7 @@ install(TARGETS
 )
 ```
 
-Learning CMake takes practice. A great way to start is by examining the CMakeLists.txt files in the `talker` and `listener` packages. Focus on understanding the essential commands that appear in most projects, as these are the fundamentals you'll use regularly.
+Learning CMake takes practice. A great way to start is by examining the CMakeLists.txt files in the [talker](tutorial_packages/talker/CMakeLists.txt) and [listener](tutorial_packages/listener/CMakeLists.txt) packages. Focus on understanding the essential commands that appear in most projects, as these are the fundamentals you'll use regularly.
 
 Now, build your workspace from the root (`~/ros2_ws`):
 
