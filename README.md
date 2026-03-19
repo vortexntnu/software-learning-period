@@ -158,6 +158,11 @@ ros2 topic echo /talker_pose
 You will learn to create packages and use git for version control.
 
 ### **Task 2.1: Making a branch and a ROS 2 package**
+Make sure you open the `SOFTWARE-LEARNING-PERIOD` folder on your IDE. The folder structure should look like this:
+
+<img width="350" height="500" alt="image" src="https://github.com/user-attachments/assets/8809c8e9-d537-4f9f-bd61-d1e53e026549" />
+
+PS: You will not have the `my_package` yet. That will be installed in later steps.
 
 Branch out from main to keep your work organized:
 
