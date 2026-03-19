@@ -216,6 +216,8 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 ```
+Remember to click on ros2 on the bottom right in VSCode to remove red wigly lines on #includes.
+<img width="400" height="226" alt="image" src="https://github.com/user-attachments/assets/ee45d17f-6f70-4ca6-9c24-162d896bbe0f" />
 
 Next, you must update `CMakeLists.txt` to build your code. Add the following lines to `CMakeLists.txt` to define your executable and link it to its dependencies:
 
