@@ -148,7 +148,7 @@ ros2 topic echo [topic_name]
 Example:
 
 ```bash
-ros2 topic echo /talker_cpp
+ros2 topic echo /talker_pose
 ```
 
 -----
