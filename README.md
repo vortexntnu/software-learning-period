@@ -289,7 +289,7 @@ Create a new package and a C++ node that subscribes to the topic you published t
 
 ### **Task 3.1: Creating a launch file**
 
-Review the example setup in the `simple_publisher` package to see how launch files can be used to launch multiple nodes.
+Review the example setup in the [`simple_publisher`](tutorial_packages/simple_publisher/launch/simple_publisher.launch.py) package to see how launch files can be used to launch multiple nodes.
 
 A launch file allows you to run multiple nodes with a single command. Create a `launch/` directory inside your package (`my_package/launch/`). Inside, create a launch file (e.g., `my_launch_file.launch.py`). The launch file can be placed in either package and launch nodes from both packages.
 
