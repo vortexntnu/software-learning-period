@@ -35,7 +35,7 @@ def generate_launch_description():
         node_name_arg, # The launch argument has to be returned
         # The launch argument has to be returned above where the launchconfiguration is used
         Node(
-            package='my_package_publisher',
+            package='my_package',
             executable='my_publisher',
             name='publisher_name',
             output='screen'

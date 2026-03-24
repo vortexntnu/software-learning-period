@@ -10,11 +10,11 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 
-add_executable(my_subscriber src/my_subscriber.cpp)
-ament_target_dependencies(my_subscriber rclcpp std_msgs)
+add_executable(my_listener src/my_listener.cpp)
+ament_target_dependencies(my_listener rclcpp std_msgs)
 
 install(TARGETS
-  my_subscriber
+  my_listener
   DESTINATION lib/${PROJECT_NAME}
 )
 
