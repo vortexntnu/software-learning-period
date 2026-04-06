@@ -46,7 +46,30 @@ ament_target_dependencies(object_detection_example_node PUBLIC
   pcl_conversions
 )
 
-install(TARGETS object_detection_example_node
+add_executable(image_republisher_node
+  src/image_republisher_node.cpp
+  src/utils.cpp)
+
+target_link_libraries(image_republisher_node PUBLIC
+  ${OpenCV_LIBS}
+  ${PCL_LIBRARIES}
+)
+
+target_include_directories(image_republisher_node PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>
+  ${OpenCV_INCLUDE_DIRS}
+  ${PCL_INCLUDE_DIRS}
+)
+
+ament_target_dependencies(image_republisher_node PUBLIC
+  rclcpp
+  cv_bridge
+  sensor_msgs
+  vision_msgs
+)
+
+install(TARGETS object_detection_example_node image_republisher_node
   DESTINATION lib/${PROJECT_NAME}
 )
 
