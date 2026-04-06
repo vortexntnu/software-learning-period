@@ -1,0 +1,21 @@
+object_detection_example_node:
+  ros__parameters:
+    color_image_sub_topic: "/zed_node/left/image_rect_color"
+    depth_image_sub_topic: "/zed_node/depth/depth_registered"
+    detections_sub_topic: "/detections_output"
+    camera_info_sub_topic: "/zed_node/depth/camera_info"
+    pointcloud_pub_topic: "/pointcloud_output"
+    original_image_height: 720
+    original_image_width: 1280
+    letterboxed_image_height: 640
+    letterboxed_image_width: 640
+
+image_republisher_node:
+  ros__parameters:
+    color_image_sub_topic: "/zed_node/left/image_rect_color"
+    color_image_pub_topic: "/image_with_boxes"
+    detections_sub_topic: "/detections_output"
+    original_image_height: 720
+    original_image_width: 1280
+    letterboxed_image_height: 640
+    letterboxed_image_width: 640

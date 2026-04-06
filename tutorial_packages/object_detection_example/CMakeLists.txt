@@ -74,8 +74,8 @@ install(TARGETS object_detection_example_node image_republisher_node
 )
 
 install(
-    DIRECTORY
-    DESTINATION share/${PROJECT_NAME}
+  DIRECTORY launch config
+  DESTINATION share/${PROJECT_NAME}
 )
 
 install(

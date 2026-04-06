@@ -6,11 +6,17 @@
 #include <sensor_msgs/msg/point_cloud2.hpp>
 #include <vision_msgs/msg/detection2_d_array.hpp>
 #include <pcl_conversions/pcl_conversions.h>
+#include <pcl/point_cloud.h>
+#include <pcl/point_types.h>
 #include <cv_bridge/cv_bridge.h>
+#include <opencv2/opencv.hpp>
+
+#include "object_detection_example/types.hpp"
+#include "object_detection_example/utils.hpp"
 
 #include <message_filters/subscriber.h>
 #include <message_filters/synchronizer.h>
-#include <message_filters/sync_policies/exact_time.h>
+#include <message_filters/sync_policies/approximate_time.h>
 
 namespace object_detection_example {
 
@@ -38,15 +44,19 @@ private:
         const sensor_msgs::msg::CameraInfo::SharedPtr camera_info_msg);
 
     rclcpp::Subscription<sensor_msgs::msg::CameraInfo>::SharedPtr color_image_info_sub_;
+    rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr pointcloud_pub_;
+
     bool color_image_info_received_ = false;
     std::string color_image_frame_id_;
+    CameraIntrinsics camera_intrinsics_;
+    LetterboxProperties letterbox_props_;
 
     // Depth image sync policies uses ExactTime with the assumption
     // that the depth image and color image are from the same camera
     // and are synchronized.
 
     // Policy for Depth Image + Color Image + Detections
-    typedef message_filters::sync_policies::ExactTime<
+    typedef message_filters::sync_policies::ApproximateTime<
         sensor_msgs::msg::Image,
         sensor_msgs::msg::Image,
         vision_msgs::msg::Detection2DArray>
