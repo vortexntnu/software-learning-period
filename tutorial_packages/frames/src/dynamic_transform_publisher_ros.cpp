@@ -1,5 +1,6 @@
 #include "frames/dynamic_transform_publisher_ros.hpp"
 #include <rclcpp/rclcpp.hpp>
+#include <cmath>
 
 DynamicTransformPublisher::DynamicTransformPublisher()
 : Node("dynamic_transform_publisher")
@@ -27,15 +28,26 @@ void DynamicTransformPublisher::timer_callback()
     transform.header.stamp = this->get_clock()->now();
 
     // TODO: populate the transform.header.frame_id and transform.child_frame_id according to spec
+    transform.header.frame_id = "odom";
+    transform.child_frame_id = "base_link";
 
     // TODO: populate the transform.transform.translation. fields (x, y, z)
+    transform.transform.translation.x = cos(theta);
+    transform.transform.translation.y = sin(theta);
+    transform.transform.translation.z = 0.0;
 
     // TODO: construct a quaternion object and set the rotation values of the quaternion
+    tf2::Quaternion q;
+    q.setRPY(0, 0, theta);
 
     // TODO: populate the transform.transform.rotation fields (x, y, z, w) with the quaternion from last step
+    transform.transform.rotation.x = q.x();
+    transform.transform.rotation.y = q.y();
+    transform.transform.rotation.z = q.z();
+    transform.transform.rotation.w = q.w();
 
     // TODO: publish transform
-    // tf_broadcaster_->sendTransform(transform);
+    tf_broadcaster_->sendTransform(transform);
 }
 
 
