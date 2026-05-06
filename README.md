@@ -70,22 +70,16 @@ git clone https://github.com/vortexntnu/software-learning-period.git
 cd ..
 ```
 
-Source the ros2 installation:
+Source the ROS 2 installation (for this terminal session):
 
 ```bash
 source /opt/ros/humble/setup.bash
 ```
-Add the command to your shell startup script
-```bash
-echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
-```
-For `zsh` users, replace `~/.bashrc` with `~/.zshrc`.
 
 Download dependencies for this repo:
 ```bash
 sudo apt install ros-humble-vision-msgs
 ```
-
 
 Build the workspace:
 
@@ -93,29 +87,11 @@ Build the workspace:
 colcon build
 ```
 
-
 Source the workspace:
 
 ```bash
 source install/setup.bash
 ```
-
-Setting up `colcon` argcomplete is recommended to achieve inner peace 🙏:
-
-```bash
-sudo apt update
-sudo apt install python3-colcon-common-extensions
-```
-
-Next, you need to "source" the autocomplete script in your shell's configuration file. This will ensure that the autocomplete functionality is loaded every time you open a new terminal.
-
-If you are using the Bash shell (the default for Ubuntu), add a line to your `.bashrc` file. Run the following command in your terminal:
-
-```bash
-echo "source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash" >> ~/.bashrc
-```
-
-For `zsh` users, replace `~/.bashrc` with `~/.zshrc`.
 
 ### **Task 1.2: Running a node**
 
