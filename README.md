@@ -302,6 +302,20 @@ Also try creating a config file that is used by your launch file.
 
 -----
 
+## State Machines (Autonomy Learning Period)
+
+Once you're comfortable with packages, topics, and launch files, the next
+step is our mission stack. The [`state_machines/`](state_machines/README.md)
+folder contains the **Waypoint Patrol FSM** exercise: finish a small
+YASMIN + ROS 2 state machine that drives the drone through 4 waypoints.
+
+That exercise's code lives in the **`vortex-cv`** repository on the
+**`autonomy-learning-period`** branch (not `main`) — see
+[`state_machines/README.md`](state_machines/README.md#0-getting-the-exercise-branch)
+for how to check out that branch and start your own branch off it.
+
+-----
+
 ### Neat Commands
 
 Use the **Tab** key to autocomplete commands. If autocomplete fails, check that you have sourced your workspace (`source install/setup.bash`) or look for typos.
