@@ -13,7 +13,7 @@ Learning period for new Control and Autonomy recruits. Each member builds one RO
 
 ### 1. Clone the repo into your `src` folder
 ```bash
-git clone https://github.com/vortexntnu/control-autonomy-learning-period.git
+git clone https://github.com/vortexntnu/software-learning-period.git
 ```
 
 ### 2. Build the packages
@@ -35,9 +35,15 @@ source install/setup.bash && \
 **Terminal 2 — bring it to life (demo driver):**
 ```bash
 source install/setup.bash && \
-  python3 src/control-autonomy-learning-period/transit_sim/scripts/drive_city.py
+  python3 src/software-learning-period/traffic-sim/transit_sim/scripts/drive_city.py
 ```
 
 You should now see the city in Foxglove: cars moving along their lanes, the four junction lights cycling, cars holding at red, and a train crossing every 30 s (first at 8 s).
 
 > `scripts/drive_city.py` is a throwaway demo publisher, not a real node — delete it once real control/auto nodes exist.
+
+## What to build next
+
+Once the city is running, see [`CURRICULUM.md`](CURRICULUM.md) for the task
+list: the order to build your vehicle/traffic-light nodes in, and how to
+check each step without needing anyone else's node yet.

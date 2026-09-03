@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>transit_starter</name>
+  <version>0.1.0</version>
+  <description>Starter skeleton for the traffic-sim curriculum: a vehicle node and a
+  signal node with the ROS 2 plumbing already wired up, and numbered TODOs where
+  the curriculum tasks in ../CURRICULUM.md want you to fill in the logic.</description>
+  <maintainer email="anbitadhi123@gmail.com">Anbit</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>transit_msgs</depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
