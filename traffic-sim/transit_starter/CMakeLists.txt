@@ -5,21 +5,42 @@ if(NOT CMAKE_CXX_STANDARD)
   set(CMAKE_CXX_STANDARD 17)
 endif()
 
+if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  add_compile_options(-Wall -Wextra -Wpedantic)
+endif()
+
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(transit_msgs REQUIRED)
 
-add_executable(vehicle_node src/vehicle_node_ros.cpp)
-target_include_directories(vehicle_node PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-)
-ament_target_dependencies(vehicle_node rclcpp transit_msgs)
+include_directories(include)
 
-add_executable(signal_node src/signal_node_ros.cpp)
-target_include_directories(signal_node PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+# The node classes go in one library, and each executable is just a main()
+# that starts one of them. Same split as vortex-auv's los_guidance package.
+set(LIB_NAME transit_starter_lib)
+add_library(${LIB_NAME} SHARED
+  src/vehicle_node_ros.cpp
+  src/signal_node_ros.cpp
 )
-ament_target_dependencies(signal_node rclcpp transit_msgs)
+
+ament_target_dependencies(${LIB_NAME}
+  rclcpp
+  transit_msgs
+)
+
+add_executable(vehicle_node src/vehicle_node.cpp)
+target_link_libraries(vehicle_node ${LIB_NAME})
+
+add_executable(signal_node src/signal_node.cpp)
+target_link_libraries(signal_node ${LIB_NAME})
+
+install(TARGETS
+  ${LIB_NAME}
+  EXPORT export_${PROJECT_NAME}
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin
+)
 
 install(TARGETS
   vehicle_node
@@ -32,8 +53,9 @@ install(
   DESTINATION include
 )
 
-install(DIRECTORY # NB! Remember to install the launch directory
+install(DIRECTORY # NB! Remember to install the launch and config directories
   launch
+  config
   DESTINATION share/${PROJECT_NAME}
 )
 

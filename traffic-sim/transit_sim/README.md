@@ -10,39 +10,54 @@ draws it. If the sim is off, the city still runs; you just can't see it.
 Markers are plain `visualization_msgs/MarkerArray`, so **Foxglove** and **RViz2**
 both render them with no change to the sim.
 
+**Working through [`../CURRICULUM.md`](../CURRICULUM.md)?** You need four
+sections of this file: *Running it*, *What you publish*, *The map*, and *Testing
+without writing a node*. The two after those are about changing the sim itself,
+which no task asks you to do.
+
 ---
 
 ## Running it
+
+This assumes you already have a ROS 2 workspace with this repo cloned into
+`src/`. If you don't, the [repo README](../../README.md) walks through that
+first.
+
+**1. Build:**
 
 ```bash
 cd ~/ros2_ws
 colcon build --packages-select transit_msgs transit_sim
 source install/setup.bash
+```
+
+**2. Start the city:**
+
+```bash
 ros2 launch transit_sim transit_sim.launch.py
 ```
 
 That starts three things: the sim, a static transform for the `map` frame, and
-the Foxglove bridge on port 8765.
+the Foxglove bridge on port 8765. Set up Foxglove next, per the section below.
 
-### See it moving
-
-There are no vehicle or light nodes yet — that's what the recruits build — so the
-city starts empty. To watch the whole thing work, run the demo driver in a second
-terminal:
+**3. Bring it to life**, in a second terminal. There are no vehicle or light
+nodes yet — those are what you build — so the city starts empty until you run
+the demo driver:
 
 ```bash
 cd ~/ros2_ws && source install/setup.bash && \
-  python3 src/control-autonomy-learning-period/transit_sim/scripts/drive_city.py
+  python3 src/software-learning-period/traffic-sim/transit_sim/scripts/drive_city.py
 ```
 
-Six cars circulate, the four lights cycle north-south then east-west, cars hold at
-their stop line on red, and a train runs the rail line every 30 seconds so you can
-watch the level-crossing barriers swing down and back up.
+Six cars circulate, the four lights cycle north-south then east-west, cars hold
+at their stop line on red, and a train runs the rail line every 30 seconds (the
+first at 8 s) so you can watch the level-crossing barriers swing down and back
+up.
 
-Every decision in that script — when to stop, when to go, when the light changes —
-happens **in the script, not in the sim**. That is the point: the sim is only
-drawing what it is told. `scripts/drive_city.py` is a throwaway stand-in for the
-nodes recruits will write, and can be deleted once real ones exist.
+Every decision in that script — when to stop, when to go, when the light
+changes — happens **in the script, not in the sim**. That is the point: the sim
+only draws what it is told. It is a throwaway stand-in for the nodes you are
+going to write, and can be deleted once yours exist.
 
 ### Viewing in Foxglove
 
@@ -79,9 +94,9 @@ Add two **MarkerArray** displays for `/transit_sim/markers` and
 
 ## What you publish
 
-The sim listens to two topics. Both are shared: **everyone publishes to the same
-topic**, keyed by id. That is what makes a new vehicle appear with no change to
-the sim.
+The sim listens to two topics. Both are shared: **every publisher writes to the
+same topic**, keyed by id. That is what lets another vehicle appear with no
+change to the sim — and what lets one node drive several at once.
 
 ### `/vehicle_state` — `transit_msgs/msg/VehicleState`
 
@@ -117,9 +132,13 @@ uint8  state
 
 A light is identified by the lane it governs, and the sim places it at that
 lane's stop line, offset to the **right** of the direction of travel (European
-convention). Every junction approach is drawn from the moment the sim starts; a
-light with nobody driving it sits with all three lamps dim. If your light node
-dies, its light goes dim rather than disappearing.
+convention).
+
+All four junction approaches are drawn from the moment the sim starts, and a
+light nobody is publishing for sits with all three lamps dim. So dim lamps mean
+"no node is driving this light", not "broken" — which is what you see on the
+other three approaches while you are still working on one. If a light node
+dies, its light goes dim rather than vanishing.
 
 ### Stale entities
 
@@ -182,6 +201,8 @@ you. Moving your vehicle is your node's job.
 ---
 
 ## Adding a new kind of entity
+
+> Sim maintenance, not a task. Nothing in the curriculum needs this.
 
 Most work needs **no sim change at all**. A new vehicle or a new light is just
 another id on an existing topic.
@@ -258,6 +279,6 @@ state by watching another topic.
 ## Tests
 
 ```bash
-cd src/control-autonomy-learning-period/transit_sim
+cd src/software-learning-period/traffic-sim/transit_sim
 python3 -m pytest test/ -q
 ```

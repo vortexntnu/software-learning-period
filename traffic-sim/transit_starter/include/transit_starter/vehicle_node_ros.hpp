@@ -1,5 +1,5 @@
-#ifndef TRANSIT_STARTER_VEHICLE_NODE_ROS_HPP
-#define TRANSIT_STARTER_VEHICLE_NODE_ROS_HPP
+#ifndef TRANSIT_STARTER__VEHICLE_NODE_ROS_HPP_
+#define TRANSIT_STARTER__VEHICLE_NODE_ROS_HPP_
 
 #include <rclcpp/rclcpp.hpp>
 #include <transit_msgs/msg/signal_state.hpp>
@@ -8,45 +8,67 @@
 #include <string>
 
 /**
- * @brief Skeleton vehicle node — fill in the TODOs in vehicle_node_ros.cpp.
+ * @brief The vehicle node. Fill in the TODOs in vehicle_node_ros.cpp.
  *
- * See ../../CURRICULUM.md for the task list this class is built around;
- * TODOs there and in the .cpp file are numbered to match.
+ * You do not need to change anything in this file. Every function you have
+ * to write is already declared here and already called from somewhere, so
+ * your job is only to fill in what goes inside them.
+ *
+ * The tasks are in ../../CURRICULUM.md. The TODO numbers here, in the .cpp
+ * file and in the curriculum all match.
  */
 class VehicleNode : public rclcpp::Node {
 public:
     VehicleNode();
 
 private:
-    /** @brief Called at tick_hz_. Builds and publishes this vehicle's state. */
+    /** @brief Reads config/transit_params.yaml. Written for you. */
+    void set_parameters();
+
+    /** @brief TODO (Task 1 and Task 5): create the publisher, timer and subscription. */
+    void set_subscribers_and_publisher();
+
+    /** @brief Runs tick_hz_ times a second. Written for you. */
     void tick();
 
-    /** @brief TODO (Task 5): records the state of the light on lane_id_. */
+    /** @brief TODO (Task 1): build one VehicleState and publish it. */
+    void publish_state();
+
+    /** @brief TODO (Task 2): move the car a little further along its lane. */
+    void advance_progress();
+
+    /** @brief TODO (Task 5): true when the car has to wait at the stop line. */
+    bool must_stop_for_light();
+
+    /** @brief TODO (Task 5): remember the state of the light on our lane. */
     void on_signal(const transit_msgs::msg::SignalState::SharedPtr msg);
 
-    // TODO (Task 1): pick a unique vehicle_id and the lane you want to
-    // drive. Lane numbers are on the map in Foxglove/RViz2, and in
-    // transit_sim/README.md's "The map" table.
-    std::string vehicle_id_ = "car_yourname";
-    uint16_t lane_id_ = 1;
-    std::string color_ = "red"; /** full list in transit_sim/transit_sim/colors.py */
+    // ---- Values from config/transit_params.yaml. Do not edit them here. ----
 
-    // TODO (Task 2): how fast your car moves along its lane (m/s), and how
-    // long the lane is (m). There's no C++ accessor for the sim's map — it's
-    // a Python-internal detail transit_sim owns — so measure the lane's
-    // length yourself by publishing with `ros2 topic pub` while sweeping
-    // progress, per transit_sim/README.md's "Testing without writing a
-    // node" section, and hardcode what you find here.
-    double speed_ = 8.0;
-    double lane_length_ = 80.0;
+    std::string vehicle_topic_;  /**< topic we publish VehicleState on */
+    std::string signal_topic_;   /**< topic we listen for SignalState on */
 
-    double tick_hz_ = 20.0;
-    double progress_ = 0.0;
-    int8_t light_state_ = -1; /** TODO (Task 5): set by on_signal() below */
+    std::string vehicle_id_;     /**< our name, unique in the whole city */
+    uint16_t lane_id_{};         /**< the lane we drive on */
+    std::string color_;          /**< names listed in transit_sim/transit_sim/colors.py */
+
+    double speed_{};             /**< how fast we drive, in metres per second */
+    double lane_length_{};       /**< how long our lane is, in metres */
+    double stop_progress_{};     /**< where the stop line is, between 0.0 and 1.0 */
+    double tick_hz_{};           /**< how many times a second tick() runs */
+
+    // ---- Values the node changes while it runs. ----
+
+    double progress_ = 0.0;      /**< how far along the lane we are, 0.0 to 1.0 */
+    bool moving_ = false;        /**< false parks the car on the map */
+    double velocity_ = 0.0;      /**< speed we report, in metres per second */
+    int light_state_ = -1;       /**< last light seen; -1 means none yet */
+
+    // ---- The ROS objects you create in set_subscribers_and_publisher(). ----
 
     rclcpp::Publisher<transit_msgs::msg::VehicleState>::SharedPtr vehicle_pub_;
     rclcpp::Subscription<transit_msgs::msg::SignalState>::SharedPtr signal_sub_;
     rclcpp::TimerBase::SharedPtr timer_;
 };
 
-#endif // TRANSIT_STARTER_VEHICLE_NODE_ROS_HPP
+#endif  // TRANSIT_STARTER__VEHICLE_NODE_ROS_HPP_
