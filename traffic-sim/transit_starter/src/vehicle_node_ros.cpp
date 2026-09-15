@@ -73,6 +73,13 @@ void VehicleNode::set_subscribers_and_publisher() {
     //     "The ROS 2 calls you will need". Write the timer period as
     //     std::chrono::duration<double>(1.0 / tick_hz_).
 
+    vehicle_pub_ = this->create_publisher<transit_msgs::msg::VehicleState>(
+        vehicle_topic_, 10);
+
+    timer_ = this->create_wall_timer(
+        std::chrono::duration<double>(1.0 / tick_hz_),
+        std::bind(&VehicleNode::tick, this));
+
     // TODO (Task 5): create the subscription. Leave this until Tasks 1 and 2
     //     work and you are ready to obey the light.
     //
@@ -85,10 +92,6 @@ void VehicleNode::set_subscribers_and_publisher() {
     //
     //     Note you will receive every traffic light in the city on this
     //     topic, not only yours. Sorting that out is on_signal's job.
-
-    throw std::runtime_error(
-        "Task 1: create the publisher and the timer in "
-        "set_subscribers_and_publisher(), then delete this throw");
 }
 
 void VehicleNode::publish_state() {
@@ -113,9 +116,17 @@ void VehicleNode::publish_state() {
     //     later tasks change progress_, moving_ and velocity_, and this
     //     function just sends whatever they are at the time.
 
-    throw std::runtime_error(
-        "Task 1: build and publish a VehicleState in publish_state(), then "
-        "delete this throw");
+    transit_msgs::msg::VehicleState message;
+
+    message.vehicle_id = vehicle_id_;
+    message.lane_id = lane_id_;
+    message.progress = progress_;
+    message.color = color_;
+    message.velocity = velocity_;
+    message.moving = moving_;
+
+    vehicle_pub_->publish(message);
+
 }
 
 void VehicleNode::advance_progress() {
@@ -138,6 +149,14 @@ void VehicleNode::advance_progress() {
     //
     //     This function being empty is what makes the car stand still in
     //     Task 1, so there is no throw to delete here.
+
+    progress_ += (speed_ / lane_length_) / tick_hz_;
+    if (progress_ > 1.0) {
+        progress_ -= 1.0;
+    }
+
+    moving_ = true;
+    velocity_ = speed_;
 }
 
 bool VehicleNode::must_stop_for_light() {

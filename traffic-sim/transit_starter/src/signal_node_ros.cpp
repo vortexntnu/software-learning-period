@@ -1,4 +1,4 @@
-#include "transit_starter/signal_node_ros.hpp"
+#include "include/transit_starter/signal_node_ros.hpp"
 
 #include <chrono>
 #include <cmath>     // std::fmod, which Task 3 needs
@@ -63,9 +63,12 @@ void SignalNode::set_publisher() {
     //     vehicle_node_ros.cpp. Only the message type and the variable
     //     names change, so read your own code rather than starting again.
 
-    throw std::runtime_error(
-        "Task 3: create the publisher and the timer in set_publisher(), then "
-        "delete this throw");
+    signal_pub_ = this->create_publisher<transit_msgs::msg::SignalState>(signal_topic_, 10);
+    timer_ = this->create_wall_timer(
+        std::chrono::duration<double>(1.0 / tick_hz_),
+        std::bind(&SignalNode::tick, this));
+
+    
 }
 
 void SignalNode::publish_lights() {
@@ -80,15 +83,27 @@ void SignalNode::publish_lights() {
     //     Write state_for_lane() first, just below. This function is
     //     useless without it.
 
+    transit_msgs::msg::SignalState message;
+    message.lane_id = lane_id_;
+    message.signal_id = signal_id_;
+    message.state = state_for_lane(lane_id_);
+
+    signal_pub_->publish(message);
+
+
     // TODO (Task 4): publish all four approaches instead of only ours.
     //
     //     The junction has four of them, lanes 1 to 4, and each needs its
     //     own message with its own lane_id, its own signal_id and its own
     //     colour from state_for_lane(). So four messages per tick.
+    for (uint16_t lane = 1; lane <= 4; ++lane) {
+        transit_msgs::msg::SignalState message;
+        message.lane_id = lane;
+        message.signal_id = "junction1_lane" + std::to_string(lane);
+        message.state = state_for_lane(lane);
 
-    throw std::runtime_error(
-        "Task 3: publish a SignalState in publish_lights(), then delete this "
-        "throw");
+        signal_pub_->publish(message);
+    }
 }
 
 uint8_t SignalNode::state_for_lane(uint16_t lane) {
@@ -128,6 +143,27 @@ uint8_t SignalNode::state_for_lane(uint16_t lane) {
     //     Compare your cycle against PHASES in scripts/drive_city.py once
     //     it works, not before.
 
-    (void)lane;  // delete this line once you use lane, in Task 4
-    return transit_msgs::msg::SignalState::RED;
+
+    double cycle = green_seconds_ + yellow_seconds_ + all_red_seconds_;
+    double t_1 = std::fmod(elapsed_, cycle);
+    double t_2 = std::fmod(elapsed_, cycle);
+
+    switch(lane) {
+        case 1:
+        case 2:
+            if (t_1 < green_seconds_) {
+                return transit_msgs::msg::SignalState::GREEN;
+            } else if (t_1 < green_seconds_ + yellow_seconds_) {
+                return transit_msgs::msg::SignalState::YELLOW;
+            }
+            return transit_msgs::msg::SignalState::RED;
+
+        case 3:
+        case 4:
+            if (t_2 < green_seconds_) {
+                return transit_msgs::msg::SignalState::RED;
+            } else if (t_2 < green_seconds_ + yellow_seconds_) {
+                return transit_msgs::msg::SignalState::YELLOW;
+            }
+            return transit_msgs::msg::SignalState::GREEN;
 }
