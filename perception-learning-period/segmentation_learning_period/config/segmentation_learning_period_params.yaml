@@ -1,0 +1,34 @@
+yolo_segmentation_node:
+  ros__parameters:
+    # Node parameters
+    input_topic: "/camera/image_raw"
+    output_bbox_topic: "/pipeline/camera/bboxes"
+    output_mask_topic: "/pipeline/camera/segmentation_mask"
+    output_debug_topic: "/pipeline/camera/segmentation_debug"
+    pub_bbox: True
+    pub_mask: True
+    pub_debug: True
+
+    # Camera info parameters
+    input_camera_info_topic: "/camera/camera/color/camera_info"
+    output_camera_info_topic: "/pipeline/camera/camera_info" # Scaled to match segmentation mask resolution
+
+    # Implementation parameters
+    model_path: "/home/eirisak/ros2_ws/src/software-learning-period/perception-learning-period/weights/best.pt"
+    device: "cpu" # Options: "cpu", "cuda", "cuda:0", "cuda:1", "mps" ++
+
+    # Image preprocessing (what ultralytics does):
+    # - Resizes image so longest side fits within imgsz (e.g., 640)
+    # - Shorter side scaled proportionally to maintain aspect ratio
+    # - Pads shorter side to nearest multiple of 32 (model stride) using grey pixels
+    # - Example: 1440x1080 input → scaled to 640x480 (no padding, 480 % 32 = 0)
+    # - Example: 1280x1000 input → scaled to 640x500 → padded to 640x512 (500 % 32 = 20)
+    # - By default (retina_masks=False), masks are returned at letterboxed resolution
+    # - Output mask resolution depends on input aspect ratio + letterbox padding
+    # - IMPORTANT: Camera info must account for both scaling AND padding offsets
+    imgsz: 640
+
+    confidence_threshold: 0.3
+    iou: 0.7 # NMS IoU threshold; set to 1.0 to disable overlap suppression
+    compile: False # Set this to True for faster inference speed
+    verbose: False # Set this to True to print Ultralytics per-frame output (speed, detections, image size)

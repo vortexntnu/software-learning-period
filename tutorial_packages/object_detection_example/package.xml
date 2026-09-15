@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>object_detection_example</name>
+  <version>0.0.0</version>
+  <description>The object detection example package</description>
+  <maintainer email="jorgen.fjermedal@hotmail.com">jorgen fjermedal</maintainer>
+  <license>The Unlicense</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>cv_bridge</depend>
+  <depend>sensor_msgs</depend>
+  <depend>vision_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>std_msgs</depend>
+  <depend>pcl_conversions</depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

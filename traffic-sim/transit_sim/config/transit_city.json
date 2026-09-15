@@ -1,0 +1,63 @@
+{
+  "configById": {
+    "3D!city": {
+      "cameraState": {
+        "perspective": false,
+        "distance": 95,
+        "phi": 0,
+        "thetaOffset": 0,
+        "targetOffset": [0, 0, 0],
+        "target": [0, 0, 0],
+        "targetOrientation": [0, 0, 0, 1],
+        "fovy": 45,
+        "near": 0.5,
+        "far": 5000
+      },
+      "followMode": "follow-pose",
+      "followTf": "map",
+      "scene": {
+        "enableStats": false,
+        "backgroundColor": "#1b2a1a",
+        "labelScaleFactor": 1
+      },
+      "transforms": {
+        "frame:map": { "visible": false },
+        "frame:city": { "visible": false }
+      },
+      "topics": {
+        "/transit_sim/static_markers": { "visible": true },
+        "/transit_sim/markers": { "visible": true }
+      },
+      "layers": {
+        "grid": { "layerId": "foxglove.Grid", "visible": false }
+      },
+      "publish": {
+        "type": "point",
+        "poseTopic": "/move_base_simple/goal",
+        "pointTopic": "/clicked_point",
+        "poseEstimateTopic": "/initialpose"
+      },
+      "imageMode": {}
+    },
+    "RawMessages!vehicles": {
+      "topicPath": "/vehicle_state"
+    },
+    "RawMessages!signals": {
+      "topicPath": "/signal_state"
+    }
+  },
+  "globalVariables": {},
+  "userNodes": {},
+  "playbackConfig": { "speed": 1 },
+  "layout": {
+    "first": "3D!city",
+    "second": {
+      "first": "RawMessages!vehicles",
+      "second": "RawMessages!signals",
+      "direction": "column",
+      "splitPercentage": 50
+    },
+    "direction": "row",
+    "splitPercentage": 72
+  }
+}

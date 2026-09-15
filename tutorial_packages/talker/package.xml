@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>talker</name> <!-- Name of the package, NB must match project name in CMakeLists.txt -->
+  <version>0.0.1</version>
+  <description>ROS2 C++ talker example</description>
+  <maintainer email="jorgen.fjermedal@hotmail.com">jorgen fjermedal</maintainer> <!-- Remember to update this for your own package-->
+  <license>MIT</license>
+
+  <!-- In ROS2, ament_cmake is the build tool. -->
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <!-- List your runtime and build dependencies here. -->
+  <depend>rclcpp</depend>
+  <depend>std_msgs</depend>
+  <depend>geometry_msgs</depend>
+
+  <!-- Export the package to recognize it as a ROS2 package -->
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
+

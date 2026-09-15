@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>frames</name>
+  <version>0.0.0</version>
+  <description>The frames package</description>
+  <maintainer email="jorgen.fjermedal@hotmail.com">jorgen fjermedal</maintainer>
+  <license>The Unlicense</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>tf2_ros</depend>
+  <depend>geometry_msgs</depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
