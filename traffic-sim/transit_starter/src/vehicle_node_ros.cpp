@@ -73,13 +73,6 @@ void VehicleNode::set_subscribers_and_publisher() {
     //     "The ROS 2 calls you will need". Write the timer period as
     //     std::chrono::duration<double>(1.0 / tick_hz_).
 
-    vehicle_pub_ = this->create_publisher<transit_msgs::msg::VehicleState>(
-        vehicle_topic_, 10);
-
-    timer_ = this->create_wall_timer(
-        std::chrono::duration<double>(1.0 / tick_hz_),
-        std::bind(&VehicleNode::tick, this));
-
     // TODO (Task 5): create the subscription. Leave this until Tasks 1 and 2
     //     work and you are ready to obey the light.
     //
@@ -92,10 +85,10 @@ void VehicleNode::set_subscribers_and_publisher() {
     //
     //     Note you will receive every traffic light in the city on this
     //     topic, not only yours. Sorting that out is on_signal's job.
-    
-    signal_sub_ = this->create_subscription<transit_msgs::msg::SignalState>(
-        signal_topic_, 10,
-        std::bind(&VehicleNode::on_signal, this, std::placeholders::_1));
+
+    throw std::runtime_error(
+        "Task 1: create the publisher and the timer in "
+        "set_subscribers_and_publisher(), then delete this throw");
 }
 
 void VehicleNode::publish_state() {
@@ -120,17 +113,9 @@ void VehicleNode::publish_state() {
     //     later tasks change progress_, moving_ and velocity_, and this
     //     function just sends whatever they are at the time.
 
-    transit_msgs::msg::VehicleState message;
-
-    message.vehicle_id = vehicle_id_;
-    message.lane_id = lane_id_;
-    message.progress = progress_;
-    message.color = color_;
-    message.velocity = velocity_;
-    message.moving = moving_;
-
-    vehicle_pub_->publish(message);
-
+    throw std::runtime_error(
+        "Task 1: build and publish a VehicleState in publish_state(), then "
+        "delete this throw");
 }
 
 void VehicleNode::advance_progress() {
@@ -153,14 +138,6 @@ void VehicleNode::advance_progress() {
     //
     //     This function being empty is what makes the car stand still in
     //     Task 1, so there is no throw to delete here.
-
-    progress_ += (speed_ / lane_length_) / tick_hz_;
-    if (progress_ > 1.0) {
-        progress_ -= 1.0;
-    }
-
-    moving_ = true;
-    velocity_ = speed_;
 }
 
 bool VehicleNode::must_stop_for_light() {
@@ -186,15 +163,7 @@ bool VehicleNode::must_stop_for_light() {
     //     Returning false always, as it does now, means the car ignores
     //     lights completely. That is correct for Tasks 1 to 4.
 
-        const double step = (speed_ / lane_length_) / tick_hz_;
-    
-        const bool at_stop_line = progress_ >= stop_progress_ - step && progress_ <= stop_progress_ + step;
-
-        if(!at_stop_line) {
-            return false;
-        }
-
-        return light_state_ != transit_msgs::msg::SignalState::GREEN;
+    return false;
 }
 
 void VehicleNode::on_signal(const transit_msgs::msg::SignalState::SharedPtr msg) {
@@ -212,8 +181,5 @@ void VehicleNode::on_signal(const transit_msgs::msg::SignalState::SharedPtr msg)
     //     You read fields off a message with -> here, not with a dot,
     //     because msg arrives as a pointer.
 
-    if (msg->lane_id != lane_id_) {
-        return;
-    }
-    light_state_ = msg->state;
+    (void)msg;  // delete this line once you use msg
 }
