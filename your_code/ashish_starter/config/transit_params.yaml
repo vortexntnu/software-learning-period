@@ -1,0 +1,60 @@
+# Values for both starter nodes.
+#
+# The nodes read everything from this file, so you change your lane, your
+# speed or your light timings here and just relaunch. You do not have to
+# rebuild, and you do not have to touch the C++ for any of it.
+#
+# "/**" below means "these values go to every node", so both nodes pick up
+# the topics. The vehicle: block is only read by the vehicle node and the
+# signal: block only by the signal node.
+#
+# Some of the TODOs below are here, in this file, and not in the C++. The
+# task list in ../CURRICULUM.md says which.
+
+/**:
+  ros__parameters:
+    topics:
+      vehicle_state: "/vehicle_state"
+      signal_state: "/signal_state"
+
+    vehicle:
+      # TODO (Task 1): pick a vehicle_id, and the lane you want to drive
+      # on. Lane numbers are written on the map in Foxglove/RViz2, and
+      # listed in transit_sim/README.md under "The map". Colour names are
+      # in transit_sim/transit_sim/colors.py.
+      vehicle_id: "car_yourname"
+      lane_id: 1
+      color: "red"
+
+      # TODO (Task 2): how long your lane is, in metres.
+      # There is no C++ function that hands you the sim's map, so you have
+      # to measure the lane yourself: publish a few different progress
+      # values with `ros2 topic pub`, see where the car lands in Foxglove,
+      # and write the length you settle on here. Change the number,
+      # relaunch, look again. speed is just how fast you want to drive.
+      speed: 8.0
+      lane_length: 80.0
+
+      # TODO (Task 5): where your lane's stop line is, as a progress value
+      # between 0.0 and 1.0. Find it the same way you found lane_length.
+      stop_progress: 0.4
+
+      # How many times a second the vehicle node updates. Leave this alone.
+      tick_hz: 20.0
+
+    signal:
+      # TODO (Task 3): which approach you light up first, and what to call
+      # it. The junction has four: lanes 1 and 2 are north and south, lanes
+      # 3 and 4 are east and west.
+      lane_id: 1
+      signal_id: "junction1_lane1"
+
+      # TODO (Task 3): how long each phase lasts, in seconds. Get the cycle
+      # working first, then come back and tune these until the junction
+      # feels right.
+      green_seconds: 9.0
+      yellow_seconds: 2.0
+      all_red_seconds: 1.0
+
+      # How many times a second the signal node updates. Leave this alone.
+      tick_hz: 5.0
