@@ -1,4 +1,4 @@
-#include "include/transit_starter/signal_node_ros.hpp"
+#include "transit_starter/signal_node_ros.hpp"
 
 #include <chrono>
 #include <cmath>     // std::fmod, which Task 3 needs
@@ -144,26 +144,28 @@ uint8_t SignalNode::state_for_lane(uint16_t lane) {
     //     it works, not before.
 
 
-    double cycle = green_seconds_ + yellow_seconds_ + all_red_seconds_;
-    double t_1 = std::fmod(elapsed_, cycle);
-    double t_2 = std::fmod(elapsed_, cycle);
+    double cycle = 2 * (green_seconds_ + yellow_seconds_ + all_red_seconds_);
+    double half = green_seconds_ + yellow_seconds_ + all_red_seconds_;
+    double t = std::fmod(elapsed_, cycle);
 
     switch(lane) {
         case 1:
         case 2:
-            if (t_1 < green_seconds_) {
-                return transit_msgs::msg::SignalState::GREEN;
-            } else if (t_1 < green_seconds_ + yellow_seconds_) {
-                return transit_msgs::msg::SignalState::YELLOW;
-            }
-            return transit_msgs::msg::SignalState::RED;
+            break;
 
         case 3:
         case 4:
-            if (t_2 < green_seconds_) {
-                return transit_msgs::msg::SignalState::RED;
-            } else if (t_2 < green_seconds_ + yellow_seconds_) {
-                return transit_msgs::msg::SignalState::YELLOW;
-            }
-            return transit_msgs::msg::SignalState::GREEN;
+            t = std::fmod(t + half, cycle);
+            break;
+        default:
+            return transit_msgs::msg::SignalState::RED;
+    }
+
+    if (t < green_seconds_) {
+        return transit_msgs::msg::SignalState::GREEN;
+    } else if (t < green_seconds_ + yellow_seconds_) {
+        return transit_msgs::msg::SignalState::YELLOW;
+    } else {
+        return transit_msgs::msg::SignalState::RED;
+    }
 }

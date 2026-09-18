@@ -92,6 +92,10 @@ void VehicleNode::set_subscribers_and_publisher() {
     //
     //     Note you will receive every traffic light in the city on this
     //     topic, not only yours. Sorting that out is on_signal's job.
+    
+    signal_sub_ = this->create_subscription<transit_msgs::msg::SignalState>(
+        signal_topic_, 10,
+        std::bind(&VehicleNode::on_signal, this, std::placeholders::_1));
 }
 
 void VehicleNode::publish_state() {
@@ -182,7 +186,15 @@ bool VehicleNode::must_stop_for_light() {
     //     Returning false always, as it does now, means the car ignores
     //     lights completely. That is correct for Tasks 1 to 4.
 
-    return false;
+        const double step = (speed_ / lane_length_) / tick_hz_;
+    
+        const bool at_stop_line = progress_ >= stop_progress_ - step && progress_ <= stop_progress_ + step;
+
+        if(!at_stop_line) {
+            return false;
+        }
+
+        return light_state_ != transit_msgs::msg::SignalState::GREEN;
 }
 
 void VehicleNode::on_signal(const transit_msgs::msg::SignalState::SharedPtr msg) {
@@ -200,5 +212,8 @@ void VehicleNode::on_signal(const transit_msgs::msg::SignalState::SharedPtr msg)
     //     You read fields off a message with -> here, not with a dot,
     //     because msg arrives as a pointer.
 
-    (void)msg;  // delete this line once you use msg
+    if (msg->lane_id != lane_id_) {
+        return;
+    }
+    light_state_ = msg->state;
 }

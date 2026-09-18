@@ -37,7 +37,7 @@
 
       # TODO (Task 5): where your lane's stop line is, as a progress value
       # between 0.0 and 1.0. Find it the same way you found lane_length.
-      stop_progress: 0.5
+      stop_progress: 0.4
 
       # How many times a second the vehicle node updates. Leave this alone.
       tick_hz: 20.0
